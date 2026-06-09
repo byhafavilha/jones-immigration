@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,1468 +13,565 @@
             box-sizing: border-box;
         }
 
-        :root {
-            --primary: #1a1a1a;
-            --secondary: #ffffff;
+        /* SYSTEMA DE TEMAS DINÂMICOS (ESTILO HEKSEL) */
+        :root[data-theme="dark"] {
+            --bg-main: #0a0a0c;
+            --bg-card: rgba(20, 20, 25, 0.7);
+            --border-glow: rgba(233, 30, 99, 0.2);
+            --text-main: #ffffff;
+            --text-muted: #a0a0aa;
             --accent: #e91e63;
-            --accent-dark: #c2185b;
-            --accent-light: #ff69b4;
-            --neutral-dark: #2a2a2a;
-            --neutral-light: #f5f5f5;
-            --text-primary: #1a1a1a;
-            --text-secondary: #666666;
-            --border-color: #e0e0e0;
-            --success: #4caf50;
-            --warning: #ff9800;
+            --accent-glow: rgba(233, 30, 99, 0.6);
+            --navbar-bg: rgba(10, 10, 12, 0.8);
+        }
+
+        :root[data-theme="light"] {
+            --bg-main: #f8f9fa;
+            --bg-card: rgba(255, 255, 255, 0.85);
+            --border-glow: rgba(0, 0, 0, 0.1);
+            --text-main: #1a1a1a;
+            --text-muted: #666666;
+            --accent: #d81b60;
+            --accent-glow: rgba(216, 27, 96, 0.3);
+            --navbar-bg: rgba(248, 249, 250, 0.85);
+        }
+
+        :root[data-theme="rainbow"] {
+            --bg-main: #0f0c20;
+            --bg-card: rgba(15, 12, 32, 0.75);
+            --border-glow: rgba(255, 255, 255, 0.2);
+            --text-main: #ffffff;
+            --text-muted: #e0e0e0;
+            --accent: #00ffcc;
+            --accent-glow: rgba(0, 255, 204, 0.8);
+            --navbar-bg: rgba(15, 12, 32, 0.9);
+            background: linear-gradient(124deg, #1f0033, #001a33, #00331a, #333300, #330000);
+            background-size: 1000% 1000%;
+            animation: rainbowAnimation 15s ease infinite;
+        }
+
+        @keyframes rainbowAnimation {
+            0%{background-position:0% 50%}
+            50%{background-position:100% 50%}
+            100%{background-position:0% 50%}
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            color: var(--text-primary);
-            background-color: var(--secondary);
-            line-height: 1.6;
+            color: var(--text-main);
+            background-color: var(--bg-main);
+            transition: all 0.4s ease;
             overflow-x: hidden;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
-
-        /* Navigation */
-        nav {
+        /* NAVBAR & SWITCHER PRO */
+        header {
             position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            z-index: 1000;
-            background: rgba(26, 26, 26, 0.95);
+            width: 100%;
+            padding: 20px 40px;
+            background: var(--navbar-bg);
             backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(233, 30, 99, 0.2);
-            padding: 1rem 2rem;
+            z-index: 1000;
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
-
-        nav ul {
-            display: none;
-        }
-
-        nav a {
-            color: var(--secondary);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--accent);
-            transition: width 0.3s ease;
-        }
-
-        nav a:hover::after {
-            width: 100%;
-        }
-
-        /* Hamburger Menu */
-        .hamburger {
-            display: flex;
-            flex-direction: column;
-            cursor: pointer;
-            gap: 5px;
-            z-index: 1001;
-            background: none;
-            border: none;
-            padding: 0.5rem;
-        }
-
-        .hamburger span {
-            width: 28px;
-            height: 3px;
-            background: var(--secondary);
-            border-radius: 2px;
-            transition: all 0.3s ease;
-        }
-
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(8px, 8px);
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(7px, -7px);
-        }
-
-        /* Mobile Menu Overlay */
-        .menu-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease, pointer-events 0.3s ease;
-        }
-
-        .menu-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        /* Mobile Menu */
-        .mobile-menu {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            max-width: 300px;
-            height: 100vh;
-            background: linear-gradient(180deg, #1a1a1a 0%, #2a2a2a 100%);
-            z-index: 1001;
-            padding-top: 80px;
-            transform: translateX(-100%);
-            transition: transform 0.3s ease;
-            overflow-y: auto;
-            box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
-        }
-
-        .mobile-menu.active {
-            transform: translateX(0);
-        }
-
-        .mobile-menu ul {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            padding: 0;
-        }
-
-        .mobile-menu li {
-            border-bottom: 1px solid rgba(233, 30, 99, 0.2);
-        }
-
-        .mobile-menu a {
-            display: block;
-            padding: 1.2rem 1.5rem;
-            color: var(--secondary);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .mobile-menu a::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 4px;
-            background: var(--accent);
-            transform: scaleY(0);
-            transform-origin: top;
-            transition: transform 0.3s ease;
-        }
-
-        .mobile-menu a:hover {
-            background: rgba(233, 30, 99, 0.1);
-            padding-left: 2rem;
-        }
-
-        .mobile-menu a:hover::before {
-            transform: scaleY(1);
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-            position: relative;
-            overflow: hidden;
-            margin-top: 70px;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 20% 50%, rgba(233, 30, 99, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 80%, rgba(233, 30, 99, 0.08) 0%, transparent 50%);
-            pointer-events: none;
-        }
-
-        .hero-content {
-            text-align: center;
-            z-index: 10;
-            position: relative;
-            animation: fadeInUp 1s ease-out;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .logo-container {
-            margin-bottom: 2rem;
-            animation: scaleIn 1s ease-out 0.2s both;
-        }
-
-        @keyframes scaleIn {
-            from {
-                opacity: 0;
-                transform: scale(0.8);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .logo {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background: rgba(233, 30, 99, 0.15);
-            border: 2px solid var(--accent);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 60px;
-            margin: 0 auto;
-            box-shadow: 0 0 40px rgba(233, 30, 99, 0.3);
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
 
-        h1 {
+        /* SWITCHER DE TEMAS HEKSEL STYLE */
+        .theme-switcher {
+            display: flex;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 5px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .theme-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            padding: 8px 16px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .theme-btn.active {
+            background: var(--accent);
+            color: #fff;
+            box-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        /* HERO SECTION */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 120px 20px 60px 20px;
+            background: radial-gradient(circle at center, rgba(233,30,99,0.05) 0%, transparent 70%);
+        }
+
+        .hero h1 {
             font-family: 'Playfair Display', serif;
             font-size: 4.5rem;
             font-weight: 900;
-            color: var(--secondary);
-            margin-bottom: 1rem;
-            letter-spacing: -2px;
-            animation: fadeInUp 1s ease-out 0.3s both;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+            line-height: 1.1;
         }
 
-        .tagline {
-            font-size: 1.3rem;
-            color: var(--accent-light);
-            margin-bottom: 2rem;
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin-bottom: 40px;
             font-weight: 300;
-            animation: fadeInUp 1s ease-out 0.4s both;
         }
 
-        .cta-buttons {
-            display: flex;
-            gap: 1.5rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            animation: fadeInUp 1s ease-out 0.5s both;
-        }
-
-        .btn {
-            padding: 1rem 2.5rem;
-            border: none;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
-            color: white;
-            box-shadow: 0 10px 30px rgba(233, 30, 99, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(233, 30, 99, 0.4);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--secondary);
-            border: 2px solid var(--accent);
-        }
-
-        .btn-secondary:hover {
-            background: var(--accent);
-            color: white;
-            transform: translateY(-3px);
-        }
-
-        /* About Section */
-        .about {
-            padding: 6rem 2rem;
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .about-content h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
-            color: var(--text-primary);
-        }
-
-        .about-content p {
-            color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-            font-size: 1.05rem;
-            line-height: 1.8;
-        }
-
-        .about-image {
-            width: 100%;
-            height: 400px;
-            background: linear-gradient(135deg, #e91e63 0%, #ff69b4 100%);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 100px;
-            color: white;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Portfolio Section */
-        .portfolio {
-            padding: 6rem 2rem;
-            background: linear-gradient(180deg, #f5f5f5 0%, #ffffff 100%);
-        }
-
+        /* GALERIA DE PORTFÓLIO PROFISSIONAL */
         .section-title {
             text-align: center;
             font-family: 'Playfair Display', serif;
-            font-size: 3rem;
-            margin-bottom: 3rem;
-            color: var(--text-primary);
+            font-size: 2.5rem;
+            margin: 80px 0 40px 0;
+            letter-spacing: 1px;
         }
 
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            max-width: 1400px;
+        .portfolio-container {
+            max-width: 1200px;
             margin: 0 auto;
+            padding: 0 20px;
         }
 
-        .gallery-item {
-            position: relative;
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            justify-content: center;
+        }
+
+        .portfolio-card {
+            background: var(--bg-card);
+            border-radius: 16px;
             overflow: hidden;
-            border-radius: 10px;
-            aspect-ratio: 1;
-            background: var(--neutral-dark);
-            cursor: pointer;
-            group: true;
-            transition: transform 0.3s ease;
+            border: 1px solid var(--border-glow);
+            backdrop-filter: blur(12px);
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
         }
 
-        .gallery-item:hover {
-            transform: scale(1.02);
+        .portfolio-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px var(--accent-glow);
         }
 
-        .gallery-item-image {
+        .image-container {
+            width: 100%;
+            height: 380px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .image-container img {
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #e91e63 0%, #ff69b4 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 80px;
-            color: white;
-            transition: transform 0.3s ease;
+            object-fit: cover;
+            transition: transform 0.5s ease;
         }
 
-        .gallery-item:hover .gallery-item-image {
-            transform: scale(1.1);
+        .portfolio-card:hover .image-container img {
+            transform: scale(1.06);
         }
 
-        .gallery-item-overlay {
+        .card-overlay {
             position: absolute;
             bottom: 0;
             left: 0;
-            right: 0;
-            padding: 1.5rem;
-            background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.8) 100%);
-            color: white;
-            transform: translateY(100%);
-            transition: transform 0.3s ease;
+            width: 100%;
+            padding: 25px;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 70%, transparent 100%);
+            color: #fff;
         }
 
-        .gallery-item:hover .gallery-item-overlay {
-            transform: translateY(0);
+        .card-overlay h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            margin-bottom: 5px;
         }
 
-        .gallery-item-title {
+        .card-overlay p {
+            font-size: 0.85rem;
+            color: #ff69b4;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             font-weight: 600;
-            font-size: 1.2rem;
         }
 
-        /* Commission Section */
-        .commission {
-            padding: 6rem 2rem;
+        /* FORMULÁRIO E FILA DE PRODUÇÃO */
+        .dashboard-section {
             max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .form-container {
-            background: var(--neutral-light);
-            padding: 3rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-        }
-
-        .form-row {
+            margin: 80px auto;
+            padding: 0 20px;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-bottom: 2rem;
+            gap: 40px;
         }
 
-        .form-row.full {
-            grid-template-columns: 1fr;
+        @media (max-width: 968px) {
+            .dashboard-section { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 3rem; }
+        }
+
+        .luxury-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            padding: 40px;
+            border-radius: 24px;
+            backdrop-filter: blur(12px);
+        }
+
+        .luxury-box h2 {
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
         }
 
         .form-group {
-            display: flex;
-            flex-direction: column;
+            margin-bottom: 20px;
         }
 
-        label {
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: var(--text-primary);
-            font-size: 0.95rem;
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            color: var(--text-muted);
         }
 
-        input[type="text"],
-        input[type="email"],
-        input[type="tel"],
-        textarea,
-        select {
-            padding: 0.75rem;
-            border: 2px solid var(--border-color);
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 14px;
+            background: rgba(0, 0, 0, 0.15);
+            border: 1px solid var(--border-glow);
             border-radius: 8px;
+            color: var(--text-main);
             font-family: 'Inter', sans-serif;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            background: white;
+            transition: border-color 0.3s;
         }
 
-        input[type="text"]:focus,
-        input[type="email"]:focus,
-        input[type="tel"]:focus,
-        textarea:focus,
-        select:focus {
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
             outline: none;
             border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(233, 30, 99, 0.1);
         }
 
-        textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
-
-        .checkbox-group {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .checkbox-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-            accent-color: var(--accent);
-        }
-
-        .checkbox-label {
-            cursor: pointer;
-            margin: 0;
-        }
-
-        .file-upload {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .file-upload input[type="file"] {
-            position: absolute;
-            left: -9999px;
-        }
-
-        .file-upload-label {
-            display: block;
-            padding: 2rem;
-            border: 2px dashed var(--accent);
-            border-radius: 8px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            background: rgba(233, 30, 99, 0.05);
-        }
-
-        .file-upload-label:hover {
-            background: rgba(233, 30, 99, 0.1);
-            border-color: var(--accent-dark);
-        }
-
-        .file-upload-text {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-        }
-
-        .file-name {
-            color: var(--accent);
-            font-weight: 600;
-            margin-top: 0.5rem;
-        }
-
-        .price-estimate {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 8px;
-            border-left: 4px solid var(--accent);
-            margin-top: 1.5rem;
-        }
-
-        .price-label {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .price-value {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--accent);
-        }
-
-        /* Queue Section */
-        .queue {
-            padding: 6rem 2rem;
-            background: linear-gradient(180deg, #1a1a1a 0%, #2a2a2a 100%);
-            color: white;
-        }
-
-        .queue .section-title {
-            color: white;
-        }
-
-        .queue-container {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .queue-item {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(233, 30, 99, 0.3);
-            padding: 2rem;
-            margin-bottom: 1.5rem;
-            border-radius: 10px;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-        }
-
-        .queue-item:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: var(--accent);
-            transform: translateX(10px);
-        }
-
-        .queue-slot {
-            display: grid;
-            grid-template-columns: 150px 1fr 150px;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .queue-number {
-            font-family: 'Space Mono', monospace;
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--accent);
-        }
-
-        .queue-status {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .queue-name {
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-
-        .queue-current {
-            color: #b0bec5;
-            font-size: 0.95rem;
-        }
-
-        .queue-progress {
+        .btn-submit {
             width: 100%;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 2px;
-            margin-top: 0.5rem;
-            overflow: hidden;
-        }
-
-        .queue-progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--accent) 0%, var(--accent-light) 100%);
-            border-radius: 2px;
-            transition: width 0.5s ease;
-        }
-
-        .queue-completion {
-            text-align: right;
-            color: var(--success);
-            font-weight: 600;
-            font-size: 1rem;
-        }
-
-        .queue-open {
-            color: var(--success);
-            font-weight: 700;
-        }
-
-        .queue-closed {
-            color: #ef5350;
-            font-weight: 700;
-        }
-
-        /* Payment Section */
-        .payment {
-            padding: 6rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .payment-methods {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .payment-card {
-            background: linear-gradient(135deg, var(--neutral-light) 0%, white 100%);
-            padding: 2rem;
-            border-radius: 12px;
-            border: 2px solid transparent;
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-
-        .payment-card.primary {
-            border-color: var(--accent);
-            box-shadow: 0 15px 40px rgba(233, 30, 99, 0.15);
-            transform: scale(1.05);
-        }
-
-        .payment-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .payment-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .payment-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-            color: var(--text-primary);
-        }
-
-        .payment-card p {
-            color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
-        }
-
-        .payment-badge {
-            display: inline-block;
+            padding: 16px;
             background: var(--accent);
-            color: white;
-            padding: 0.4rem 1rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        /* Contact Section */
-        .contact {
-            padding: 6rem 2rem;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-            color: white;
-            text-align: center;
-        }
-
-        .contact h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-            margin-top: 2rem;
-        }
-
-        .social-link {
-            color: var(--secondary);
-            font-size: 2rem;
-            transition: all 0.3s ease;
-            text-decoration: none;
-        }
-
-        .social-link:hover {
-            color: var(--accent);
-            transform: scale(1.2);
-        }
-
-        /* Footer */
-        footer {
-            background: #0a0a0a;
-            padding: 2rem;
-            text-align: center;
-            color: #888;
-            border-top: 1px solid rgba(233, 30, 99, 0.2);
-        }
-
-        /* Loading State */
-        .loading {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 2000;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .loading.active {
-            display: flex;
-        }
-
-        .spinner {
-            border: 4px solid rgba(233, 30, 99, 0.2);
-            border-top-color: var(--accent);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 0.8s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Success Message */
-        .success-message {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: var(--success);
-            color: white;
-            padding: 1rem 2rem;
+            border: none;
             border-radius: 8px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            animation: slideIn 0.3s ease;
-            z-index: 2001;
-            max-width: 400px;
+            color: white;
+            font-weight: 600;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: background 0.3s, box-shadow 0.3s;
         }
 
-        @keyframes slideIn {
-            from {
-                transform: translateX(500px);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
+        .btn-submit:hover {
+            background: #d81b60;
+            box-shadow: 0 0 15px var(--accent-glow);
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            nav {
-                padding: 1rem 1.5rem;
-            }
+        /* TABELA DE QUEUE FUTURISTA */
+        .queue-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
 
-            nav a::after {
-                display: none;
-            }
+        .queue-table th, .queue-table td {
+            padding: 14px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
 
-            h1 {
-                font-size: 2.5rem;
-            }
+        .queue-table th {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+        }
 
-            .tagline {
-                font-size: 1.1rem;
-            }
+        .status-badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
 
-            .cta-buttons {
-                gap: 1rem;
-            }
+        .status-materials { background: rgba(0, 255, 204, 0.15); color: #00ffcc; }
+        .status-sculpting { background: rgba(255, 152, 0, 0.15); color: #ff9800; }
+        .status-furring { background: rgba(233, 30, 99, 0.15); color: #e91e63; }
 
-            .btn {
-                padding: 0.8rem 1.5rem;
-                font-size: 0.9rem;
-            }
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
 
-            .about {
-                grid-template-columns: 1fr;
-            }
+        .progress-fill {
+            height: 100%;
+            background: var(--accent);
+            border-radius: 10px;
+        }
 
-            .about-content h2 {
-                font-size: 2rem;
-            }
+        /* FOOTER DE LUXO COM REDES SOCIAIS */
+        footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 60px 40px;
+            text-align: center;
+            background: rgba(0,0,0,0.2);
+        }
 
-            .form-row {
-                grid-template-columns: 1fr;
-            }
+        .footer-socials {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
 
-            .queue-slot {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
+        .footer-socials a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+        }
 
-            .payment-methods {
-                grid-template-columns: 1fr;
-            }
+        .footer-socials a:hover {
+            color: var(--accent);
+            text-shadow: 0 0 8px var(--accent-glow);
+        }
 
-            .payment-card.primary {
-                transform: scale(1);
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .gallery {
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            }
+        .footer-copy {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-family: 'Space Mono', monospace;
         }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav>
-        <div style="flex: 1;"></div>
-        <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#portfolio">Portfolio</a></li>
-            <li><a href="#commission">Commissions</a></li>
-            <li><a href="#queue">Queue</a></li>
-            <li><a href="#payment">Payment</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-        <div class="hamburger" id="hamburger">
-            <span></span>
-            <span></span>
-            <span></span>
+
+    <header>
+        <div class="logo">Lunar Tail Co.</div>
+        <div class="theme-switcher">
+            <button class="theme-btn active" onclick="setTheme('dark')">Dark</button>
+            <button class="theme-btn" onclick="setTheme('light')">Light</button>
+            <button class="theme-btn" onclick="setTheme('rainbow')">Rainbow</button>
         </div>
-    </nav>
+    </header>
 
-    <!-- Mobile Menu Overlay -->
-    <div class="menu-overlay" id="menuOverlay"></div>
+    <section class="hero">
+        <h1>High Couture<br>Fursuits & Cosplays</h1>
+        <p>Premium bespoke wearable art tailored for the elite. Handcrafted in the United States with meticulous attention to detail and luxury materials.</p>
+    </section>
 
-    <!-- Mobile Menu -->
-    <div class="mobile-menu" id="mobileMenu">
-        <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#portfolio">Portfolio</a></li>
-            <li><a href="#commission">Commissions</a></li>
-            <li><a href="#queue">Queue</a></li>
-            <li><a href="#payment">Payment</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-    </div>
-
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="hero-content">
-            <div class="logo-container">
-                <div class="logo">🌙</div>
+    <h2 class="section-title">The Masterpieces</h2>
+    <section class="portfolio-container">
+        <div class="portfolio-grid">
+            
+            <div class="portfolio-card">
+                <div class="image-container">
+                    <img src="images/fursuit1.jpg" alt="Shadow Obsidian Wolf">
+                </div>
+                <div class="card-overlay">
+                    <h3>Shadow Obsidian Wolf</h3>
+                    <p>Fullsuit Commission — Active Pose</p>
+                </div>
             </div>
-            <h1>Lunar Tail Co</h1>
-            <p class="tagline">Elite Fursuit & Custom Cosplay Creator</p>
-            <div class="cta-buttons">
-                <a href="#commission" class="btn btn-primary">Request Commission</a>
-                <a href="#portfolio" class="btn btn-secondary">View Portfolio</a>
+
+            <div class="portfolio-card">
+                <div class="image-container">
+                    <img src="images/fursuit2.jpg" alt="Shadow Obsidian Wolf Front">
+                </div>
+                <div class="card-overlay">
+                    <h3>Shadow Obsidian Wolf</h3>
+                    <p>Fullsuit Commission — Front View</p>
+                </div>
             </div>
+
+            <div class="portfolio-card">
+                <div class="image-container">
+                    <img src="images/fursuit3.jpg" alt="Obsidian Wolf Profile">
+                </div>
+                <div class="card-overlay">
+                    <h3>Obsidian Wolf Head</h3>
+                    <p>Premium Craftsmanship — Side Profile</p>
+                </div>
+            </div>
+
+            <div class="portfolio-card">
+                <div class="image-container">
+                    <img src="images/fursuit4.jpg" alt="Obsidian Wolf Expression">
+                </div>
+                <div class="card-overlay">
+                    <h3>Obsidian Wolf Head</h3>
+                    <p>Premium Craftsmanship — Front Expression</p>
+                </div>
+            </div>
+
         </div>
     </section>
 
-    <!-- About Section -->
-    <section class="about" id="about">
-        <div class="about-content">
-            <h2>Crafting Dreams into Reality</h2>
-            <p>Welcome to Lunar Tail Co, where artistry meets precision. With years of experience in creating bespoke fursuits and custom cosplay costumes, I specialize in bringing your imagination to life with exceptional craftsmanship and attention to detail.</p>
-            <p>Every piece I create is unique. From concept to completion, I work closely with each client to ensure their character comes alive exactly as envisioned. Using premium materials and innovative techniques, your fursuit or cosplay costume will be a masterpiece.</p>
-            <p>Join our exclusive roster of satisfied clients and experience the Lunar Tail difference.</p>
-        </div>
-        <div class="about-image">🎨</div>
-    </section>
-
-    <!-- Portfolio Section -->
-    <section class="portfolio" id="portfolio">
-        <h2 class="section-title">Featured Works</h2>
-        <div class="gallery">
-            <div class="gallery-item">
-                <div class="gallery-item-image">🐺</div>
-                <div class="gallery-item-overlay">
-                    <div class="gallery-item-title">Arctic Wolf Suit</div>
-                </div>
-            </div>
-            <div class="gallery-item">
-                <div class="gallery-item-image">🦊</div>
-                <div class="gallery-item-overlay">
-                    <div class="gallery-item-title">Celestial Fox</div>
-                </div>
-            </div>
-            <div class="gallery-item">
-                <div class="gallery-item-image">🐉</div>
-                <div class="gallery-item-overlay">
-                    <div class="gallery-item-title">Dragon Legacy</div>
-                </div>
-            </div>
-            <div class="gallery-item">
-                <div class="gallery-item-image">🦅</div>
-                <div class="gallery-item-overlay">
-                    <div class="gallery-item-title">Phoenix Rising</div>
-                </div>
-            </div>
-            <div class="gallery-item">
-                <div class="gallery-item-image">🐱</div>
-                <div class="gallery-item-overlay">
-                    <div class="gallery-item-title">Urban Cat</div>
-                </div>
-            </div>
-            <div class="gallery-item">
-                <div class="gallery-item-image">🦌</div>
-                <div class="gallery-item-overlay">
-                    <div class="gallery-item-title">Ethereal Deer</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Commission Request Section -->
-    <section class="commission" id="commission">
-        <h2 class="section-title">Commission Request Form</h2>
-        <div class="form-container">
+    <div class="dashboard-section">
+        
+        <div class="luxury-box">
+            <h2>Commission Application</h2>
             <form id="commissionForm">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="clientName">Your Name *</label>
-                        <input type="text" id="clientName" name="clientName" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="clientEmail">Email Address *</label>
-                        <input type="email" id="clientEmail" name="clientEmail" required>
-                    </div>
+                <div class="form-group">
+                    <label>Client Name</label>
+                    <input type="text" name="name" required placeholder="Your full name">
                 </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="clientPhone">Phone Number</label>
-                        <input type="tel" id="clientPhone" name="clientPhone">
-                    </div>
-                    <div class="form-group">
-                        <label for="characterName">Character Name *</label>
-                        <input type="text" id="characterName" name="characterName" required>
-                    </div>
+                <div class="form-group">
+                    <label>Contact (Discord / Telegram)</label>
+                    <input type="text" name="contact" required placeholder="@yourhandle">
                 </div>
-
-                <div class="form-row full">
-                    <div class="form-group">
-                        <label for="characterConcept">Character Concept Description *</label>
-                        <textarea id="characterConcept" name="characterConcept" placeholder="Describe your character in detail..." required></textarea>
-                    </div>
+                <div class="form-group">
+                    <label>Project Type</label>
+                    <select name="project_type" required>
+                        <option value="fullsuit_digi">Fullsuit (Digitigrade)</option>
+                        <option value="fullsuit_planti">Fullsuit (Plantigrade)</option>
+                        <option value="partial">Partial Suit</option>
+                        <option value="head_only">Head Only</option>
+                    </select>
                 </div>
-
-                <div class="form-row full">
-                    <div class="form-group">
-                        <label>Suit Type Selection *</label>
-                        <div class="checkbox-group">
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="fullsuit" name="suitType" value="Full Fursuit (Head, Body, Hands, Feet)" data-price="2500">
-                                <label for="fullsuit" class="checkbox-label">Full Fursuit - Head, Body, Hands, Feet ($2,500 - $4,500)</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="partial" name="suitType" value="Partial Suit (Head, Hands, Feet)" data-price="1500">
-                                <label for="partial" class="checkbox-label">Partial Suit - Head, Hands, Feet ($1,500 - $2,500)</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="head" name="suitType" value="Head Only" data-price="800">
-                                <label for="head" class="checkbox-label">Head/Mask Only ($800 - $1,500)</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="digi" name="suitType" value="Digitigrade Legs" data-price="400">
-                                <label for="digi" class="checkbox-label">Digitigrade Legs Conversion (add-on, +$400 - $800)</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="plantigrade" name="suitType" value="Plantigrade Feet" data-price="300">
-                                <label for="plantigrade" class="checkbox-label">Plantigrade Feet Style (add-on, +$300 - $600)</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="cosplay" name="suitType" value="Custom Cosplay Costume" data-price="1800">
-                                <label for="cosplay" class="checkbox-label">Custom Cosplay Costume ($1,800 - $3,500)</label>
-                            </div>
-                        </div>
-                    </div>
+                <div class="form-group">
+                    <label>Character Concept & Details</label>
+                    <textarea name="details" rows="4" placeholder="Describe your character vision..."></textarea>
                 </div>
-
-                <div class="form-row full">
-                    <div class="form-group file-upload">
-                        <input type="file" id="refSheet" name="refSheet" accept="image/*,.pdf" required>
-                        <label for="refSheet" class="file-upload-label">
-                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">📄</div>
-                            <div class="file-upload-text">Click to upload Reference Sheet (Ref Sheet)</div>
-                            <div class="file-upload-text" style="font-size: 0.85rem; margin-top: 0.5rem;">PNG, JPG, or PDF accepted</div>
-                            <div class="file-name" id="fileName"></div>
-                        </label>
-                    </div>
+                <div class="form-group">
+                    <label>Reference Sheet Link</label>
+                    <input type="url" name="ref_sheet" placeholder="https://imgur.com/your-art">
                 </div>
-
-                <div class="form-row full">
-                    <div class="form-group">
-                        <label for="additionalNotes">Additional Details & Special Requests</label>
-                        <textarea id="additionalNotes" name="additionalNotes" placeholder="Any special requests, design preferences, or important details..."></textarea>
-                    </div>
-                </div>
-
-                <div class="form-row full">
-                    <div class="price-estimate">
-                        <div class="price-label">Estimated Starting Price</div>
-                        <div class="price-value" id="priceEstimate">$0</div>
-                        <div style="color: #999; font-size: 0.85rem; margin-top: 0.5rem;">Final quote will be provided after review</div>
-                    </div>
-                </div>
-
-                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 2rem;">Submit Commission Request</button>
+                <button type="submit" class="btn-submit">SUBMIT APPLICATION</button>
             </form>
         </div>
-    </section>
 
-    <!-- Queue Status Section -->
-    <section class="queue" id="queue">
-        <h2 class="section-title">Live Queue Status</h2>
-        <div class="queue-container">
-            <div class="queue-item">
-                <div class="queue-slot">
-                    <div class="queue-number">1</div>
-                    <div class="queue-status">
-                        <div class="queue-name">Midnight Wolf</div>
-                        <div class="queue-current">Current Stage: Material Gathering & Pattern Drafting</div>
-                        <div class="queue-progress">
-                            <div class="queue-progress-bar" style="width: 15%;"></div>
-                        </div>
-                    </div>
-                    <div class="queue-completion">15% Done</div>
-                </div>
-            </div>
-
-            <div class="queue-item">
-                <div class="queue-slot">
-                    <div class="queue-number">2</div>
-                    <div class="queue-status">
-                        <div class="queue-name">Cosmic Fox Partial</div>
-                        <div class="queue-current">Current Stage: Furring & Sewing</div>
-                        <div class="queue-progress">
-                            <div class="queue-progress-bar" style="width: 45%;"></div>
-                        </div>
-                    </div>
-                    <div class="queue-completion">45% Done</div>
-                </div>
-            </div>
-
-            <div class="queue-item">
-                <div class="queue-slot">
-                    <div class="queue-number">3</div>
-                    <div class="queue-status">
-                        <div class="queue-name">Dragon Head Commission</div>
-                        <div class="queue-current">Current Stage: Eyes & Details</div>
-                        <div class="queue-progress">
-                            <div class="queue-progress-bar" style="width: 75%;"></div>
-                        </div>
-                    </div>
-                    <div class="queue-completion">75% Done</div>
-                </div>
-            </div>
-
-            <div class="queue-item">
-                <div class="queue-slot">
-                    <div class="queue-number">4</div>
-                    <div class="queue-status">
-                        <div class="queue-name">Available Slot</div>
-                        <div class="queue-current">Queue is OPEN for new commissions</div>
-                        <div class="queue-progress">
-                            <div class="queue-progress-bar" style="width: 0%;"></div>
-                        </div>
-                    </div>
-                    <div class="queue-completion queue-open">OPEN</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Payment Section -->
-    <section class="payment" id="payment">
-        <h2 class="section-title">Payment Methods & Process</h2>
-        <div class="payment-methods">
-            <div class="payment-card primary">
-                <div class="payment-badge">RECOMMENDED</div>
-                <div class="payment-icon">🏦</div>
-                <h3>Zelle Transfer</h3>
-                <p>Instant, secure bank transfer. The preferred method for all commission deposits. Payments processed within seconds.</p>
-                <p style="font-size: 0.9rem; color: var(--accent); font-weight: 600;">Fastest & Safest Option</p>
-            </div>
-
-            <div class="payment-card">
-                <div class="payment-icon">💳</div>
-                <h3>PayPal</h3>
-                <p>Secure online payment. Available for all transaction sizes. Small processing fee may apply.</p>
-                <p style="font-size: 0.9rem; color: var(--text-secondary);">Standard processing</p>
-            </div>
-
-            <div class="payment-card">
-                <div class="payment-icon">🪙</div>
-                <h3>Stripe</h3>
-                <p>Credit/Debit card payments. Secure encrypted transactions with additional protection.</p>
-                <p style="font-size: 0.9rem; color: var(--text-secondary);">Multiple payment options</p>
-            </div>
+        <div class="luxury-box">
+            <h2>Live Production Queue</h2>
+            <table class="queue-table">
+                <thead>
+                    <tr>
+                        <th>Client</th>
+                        <th>Project</th>
+                        <th>Current Stage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Alpha_Wolf</td>
+                        <td>Fullsuit (Digi)</td>
+                        <td>
+                            <span class="status-badge status-furring">Furring</span>
+                            <div class="progress-bar"><div class="progress-fill" style="width: 85%;"></div></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Kitsune_Tx</td>
+                        <td>Head Only</td>
+                        <td>
+                            <span class="status-badge status-sculpting">Sculpting</span>
+                            <div class="progress-bar"><div class="progress-fill" style="width: 45%;"></div></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>VixenLux</td>
+                        <td>Partial Suit</td>
+                        <td>
+                            <span class="status-badge status-materials">Materials</span>
+                            <div class="progress-bar"><div class="progress-fill" style="width: 15%;"></div></div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
-        <div style="background: #f5f5f5; padding: 2rem; border-radius: 12px; margin-top: 3rem;">
-            <h3 style="color: var(--text-primary); margin-bottom: 1rem;">Payment Schedule</h3>
-            <ul style="color: var(--text-secondary); line-height: 2; list-style-position: inside;">
-                <li><strong>Down Payment (50%):</strong> Due upon approval to secure your slot in the queue</li>
-                <li><strong>Final Payment (50%):</strong> Due before shipping/delivery</li>
-                <li><strong>Rush Orders:</strong> Available with 25% rush fee + expedited payment terms</li>
-            </ul>
-            <p style="color: var(--text-secondary); margin-top: 1rem; font-size: 0.95rem;"><strong>Note:</strong> All orders are custom-made. Deposits are non-refundable unless the order is cancelled by Lunar Tail Co.</p>
-        </div>
-    </section>
+    </div>
 
-    <!-- Contact Section -->
-    <section class="contact" id="contact">
-        <h2>Let's Create Something Magical</h2>
-        <p style="font-size: 1.1rem; margin-bottom: 2rem;">Have questions about commissions? Reach out directly.</p>
-        
-        <div style="margin-bottom: 2rem;">
-            <p style="font-size: 0.95rem; margin-bottom: 0.5rem;">📧 <strong>Email:</strong> commissions@lunartailco.com</p>
-            <p style="font-size: 0.95rem; margin-bottom: 0.5rem;">📞 <strong>Phone:</strong> +1 (555) 123-4567</p>
-            <p style="font-size: 0.95rem;">🕐 <strong>Response Time:</strong> Within 48 hours</p>
-        </div>
-
-        <div class="social-links">
-            <a href="#" class="social-link" title="Instagram">📷</a>
-            <a href="#" class="social-link" title="Twitter/X">𝕏</a>
-            <a href="#" class="social-link" title="TikTok">🎵</a>
-            <a href="#" class="social-link" title="Discord">💬</a>
-        </div>
-    </section>
-
-    <!-- Footer -->
     <footer>
-        <p>&copy; 2024 Lunar Tail Co. All rights reserved. Handcrafted with love and magic. ✨</p>
+        <div class="footer-socials">
+            <a href="https://instagram.com/lunartailco" target="_blank">Instagram</a>
+            <a href="https://x.com/lunartailco" target="_blank">Twitter / X</a>
+            <a href="https://t.me/lunartailco" target="_blank">Telegram</a>
+        </div>
+        <div class="footer-copy">
+            &copy; 2026 LUNAR TAIL CO. ALL RIGHTS RESERVED. POWERED BY HEKSEL STUDIO.
+        </div>
     </footer>
 
-    <!-- Loading Spinner -->
-    <div class="loading" id="loading">
-        <div class="spinner"></div>
-    </div>
-
-    <!-- Success Message -->
-    <div class="success-message" id="successMessage" style="display: none;">
-        ✓ Commission request submitted successfully! We'll be in touch within 48 hours.
-    </div>
-
     <script>
-        // ============================================================
-        // WEBHOOK CONFIGURATION - MAKE.COM INTEGRATION
-        // ============================================================
-        const MAKE_WEBHOOK_URL = 'https://hook.make.com/YOUR_WEBHOOK_ID_HERE';
-        
-        // Replace with your actual Make.com webhook URL
-        // To get your webhook: 
-        // 1. Create a scenario in Make.com
-        // 2. Add a Webhook trigger
-        // 3. Copy the webhook URL
-        // 4. Paste it here as: const MAKE_WEBHOOK_URL = 'https://hook.make.com/xxxxxxxxxxxx';
+        // CONFIGURAÇÃO DO WEBHOOK DO MAKE.COM
+        const MAKE_WEBHOOK_URL = 'https://hook.us2.make.com/lawfjw0n1ugn7ur6zh211tn63jgs035m';
 
-        // ============================================================
-        // HAMBURGER MENU FUNCTIONALITY
-        // ============================================================
-
-        const hamburger = document.getElementById('hamburger');
-        const mobileMenu = document.getElementById('mobileMenu');
-        const menuOverlay = document.getElementById('menuOverlay');
-        const menuLinks = mobileMenu.querySelectorAll('a');
-
-        // Toggle menu when hamburger is clicked
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            mobileMenu.classList.toggle('active');
-            menuOverlay.classList.toggle('active');
-        });
-
-        // Close menu when a link is clicked
-        menuLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                hamburger.classList.remove('active');
-                mobileMenu.classList.remove('active');
-                menuOverlay.classList.remove('active');
-            });
-        });
-
-        // Close menu when overlay is clicked
-        menuOverlay.addEventListener('click', () => {
-            hamburger.classList.remove('active');
-            mobileMenu.classList.remove('active');
-            menuOverlay.classList.remove('active');
-        });
-
-        // Close menu when pressing Escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                hamburger.classList.remove('active');
-                mobileMenu.classList.remove('active');
-                menuOverlay.classList.remove('active');
-            }
-        });
-
-        // ============================================================
-        // FORM HANDLING & WEBHOOK INTEGRATION
-        // ============================================================
-
-        const commissionForm = document.getElementById('commissionForm');
-        const refSheetInput = document.getElementById('refSheet');
-        const fileNameDisplay = document.getElementById('fileName');
-        const priceEstimate = document.getElementById('priceEstimate');
-        const loadingSpinner = document.getElementById('loading');
-        const successMessage = document.getElementById('successMessage');
-
-        // Update filename display
-        refSheetInput.addEventListener('change', (e) => {
-            if (e.target.files.length > 0) {
-                fileNameDisplay.textContent = `📁 ${e.target.files[0].name}`;
-            }
-        });
-
-        // Update price estimate based on selections
-        document.querySelectorAll('input[name="suitType"]').forEach(checkbox => {
-            checkbox.addEventListener('change', updatePriceEstimate);
-        });
-
-        function updatePriceEstimate() {
-            let totalPrice = 0;
-            document.querySelectorAll('input[name="suitType"]:checked').forEach(checkbox => {
-                const price = parseInt(checkbox.getAttribute('data-price')) || 0;
-                totalPrice += price;
-            });
-            priceEstimate.textContent = totalPrice > 0 ? `$${totalPrice.toLocaleString()}` : '$0';
-        }
-
-        // Form submission
-        commissionForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
+        // LÓGICA DO INTERRUPTOR DE TEMAS
+        function setTheme(themeName) {
+            document.documentElement.setAttribute('data-theme', themeName);
             
-            // Show loading state
-            loadingSpinner.classList.add('active');
-
-            // Collect form data
-            const formData = new FormData(commissionForm);
-            
-            // Convert to plain object for webhook
-            const commissionData = {
-                clientName: document.getElementById('clientName').value,
-                clientEmail: document.getElementById('clientEmail').value,
-                clientPhone: document.getElementById('clientPhone').value,
-                characterName: document.getElementById('characterName').value,
-                characterConcept: document.getElementById('characterConcept').value,
-                suitType: Array.from(document.querySelectorAll('input[name="suitType"]:checked'))
-                    .map(cb => cb.value),
-                additionalNotes: document.getElementById('additionalNotes').value,
-                estimatedPrice: document.getElementById('priceEstimate').textContent,
-                refSheetFileName: refSheetInput.files.length > 0 ? refSheetInput.files[0].name : 'No file uploaded',
-                submissionTime: new Date().toISOString(),
-                source: 'Website Commission Form'
-            };
-
-            try {
-                // Send to Make.com webhook
-                const response = await fetch(MAKE_WEBHOOK_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(commissionData),
-                    mode: 'no-cors' // Important for webhook endpoints
-                });
-
-                // Show success message
-                loadingSpinner.classList.remove('active');
-                successMessage.style.display = 'block';
-                
-                // Reset form
-                commissionForm.reset();
-                fileNameDisplay.textContent = '';
-                priceEstimate.textContent = '$0';
-
-                // Hide success message after 5 seconds
-                setTimeout(() => {
-                    successMessage.style.display = 'none';
-                }, 5000);
-
-                // Scroll to top
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-
-            } catch (error) {
-                console.error('Form submission error:', error);
-                loadingSpinner.classList.remove('active');
-                
-                // Show error message
-                alert('There was an issue submitting your commission request. Please try again or contact us directly.');
-            }
-        });
-
-        // ============================================================
-        // SMOOTH SCROLL ENHANCEMENT
-        // ============================================================
-
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                const href = this.getAttribute('href');
-                if (href !== '#' && document.querySelector(href)) {
-                    e.preventDefault();
-                    const target = document.querySelector(href);
-                    const offsetTop = target.offsetTop - 80;
-                    window.scrollTo({
-                        top: offsetTop,
-                        behavior: 'smooth'
-                    });
+            // Atualizar botões ativos
+            document.querySelectorAll('.theme-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if(btn.innerText.toLowerCase() === themeName) {
+                    btn.classList.add('active');
                 }
             });
-        });
-
-        // ============================================================
-        // QUEUE STATUS AUTO-UPDATE (OPTIONAL - for real-time updates)
-        // ============================================================
-
-        // You can integrate this with a backend API to fetch real-time queue data
-        // Example: fetch('/api/queue-status') every 30 seconds
-
-        function updateQueueStatus() {
-            // This is where you would fetch updated queue data from your backend
-            // and update the DOM accordingly
-            
-            // Example API call:
-            // fetch('/api/queue-status')
-            //     .then(res => res.json())
-            //     .then(data => {
-            //         // Update queue items with fresh data
-            //     });
         }
 
-        // Uncomment to enable auto-refresh every 30 seconds
-        // setInterval(updateQueueStatus, 30000);
+        // FORMULÁRIO POST WEBHOOK
+        document.getElementById('commissionForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
 
-        // ============================================================
-        // ANALYTICS & TRACKING (Optional)
-        // ============================================================
-
-        // Track form interactions (if using Google Analytics or similar)
-        document.getElementById('commissionForm').addEventListener('change', (e) => {
-            // You can add analytics tracking here
-            console.log('Form field changed:', e.target.name);
+            try {
+                const response = await fetch(MAKE_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                if(response.ok) {
+                    alert('Application submitted successfully to Lunar Tail Co!');
+                    e.target.reset();
+                } else {
+                    alert('Submission error. Please try again.');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Connection failure. Check your internet.');
+            }
         });
-
-        // ============================================================
-        // PAGE LOAD ANIMATIONS
-        // ============================================================
-
-        window.addEventListener('load', () => {
-            // Add animation classes or trigger animations on load
-            document.body.classList.add('loaded');
-        });
-
-        // ============================================================
-        // RESPONSIVE BEHAVIOR
-        // ============================================================
-
-        // Handle mobile menu or responsive adjustments
-        if (window.innerWidth < 768) {
-            // Mobile-specific behavior
-            document.addEventListener('touchstart', function(){}, true);
-        }
     </script>
 </body>
 </html>
