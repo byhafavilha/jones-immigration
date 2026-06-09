@@ -1,319 +1,518 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Lunar Tail Co. — American high-fashion fursuit & custom cosplay commissions. Handcrafted luxury costumes built to your character's soul.">
-    <title>Lunar Tail Co. | Luxury Fursuit & Cosplay Commissions</title>
+    <title>Lunar Tail Co - Elite Fursuit & Cosplay Creator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
     <style>
-        /* ╔══════════════════════════════════════════════════════════╗
-           ║  LUNAR TAIL CO. — PREMIUM LUXURY DESIGN LAYER
-           ║  Glassmorphism • Mystic Cosmic Palette • Cinematic Gallery
-           ║  Dashboard Futurista • 100% Responsivo • Elite Worldwide
-           ╚══════════════════════════════════════════════════════════╝ */
-
-        /* ==================== RESET & FOUNDATION ==================== */
-        *, *::before, *::after {
-            box-sizing: border-box;
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
 
-        /* ==================== COLOR PALETTE (COSMIC LUXURY) ==================== */
         :root {
-            /* Primary Colors — Mystic & Galactic */
-            --bg-deep: #0a0e27;              /* Deep cosmic black */
-            --bg-dark-alt: #1a1f3a;          /* Dark metallic gray-blue */
-            --primary-blue: #4a7dff;         /* Galactic blue */
-            --primary-pink: #ff4d8f;         /* Vibrant neon pink */
-            --accent-silver: #e8e8ff;        /* Ethereal silver */
-            --accent-cyan: #00d4ff;          /* Cyan glow */
-            
-            /* Gradients */
-            --gradient-cosmic: linear-gradient(135deg, #4a7dff 0%, #ff4d8f 50%, #00d4ff 100%);
-            --gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 100%);
-            
-            /* Text Colors */
-            --text-primary: #f5f7ff;         /* Ultra light for dark bg */
-            --text-secondary: #b0b8d4;       /* Softer secondary text */
-            --text-muted: #7a8299;           /* Muted labels */
-            
-            /* Shadows & Effects */
-            --shadow-sm: 0 4px 15px rgba(74, 125, 255, 0.1);
-            --shadow-md: 0 8px 32px rgba(74, 125, 255, 0.15);
-            --shadow-lg: 0 12px 48px rgba(74, 125, 255, 0.2);
-            --glow-pink: 0 0 20px rgba(255, 77, 143, 0.4);
-            --glow-blue: 0 0 20px rgba(74, 125, 255, 0.4);
-            
-            /* Spacing & Typography */
-            --letter-spacing-tight: 0.08em;
-            --letter-spacing-normal: 0.05em;
+            --primary: #1a1a1a;
+            --secondary: #ffffff;
+            --accent: #e91e63;
+            --accent-dark: #c2185b;
+            --accent-light: #ff69b4;
+            --neutral-dark: #2a2a2a;
+            --neutral-light: #f5f5f5;
+            --text-primary: #1a1a1a;
+            --text-secondary: #666666;
+            --border-color: #e0e0e0;
+            --success: #4caf50;
+            --warning: #ff9800;
         }
 
         body {
-            background: var(--bg-deep);
+            font-family: 'Inter', sans-serif;
             color: var(--text-primary);
-            font-family: 'Segoe UI', 'Helvetica Neue', system-ui, sans-serif;
-            line-height: 1.65;
-            font-weight: 400;
+            background-color: var(--secondary);
+            line-height: 1.6;
             overflow-x: hidden;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(233, 30, 99, 0.2);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav ul {
+            display: none;
+        }
+
+        nav a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
             position: relative;
         }
 
-        /* Animated gradient background overlay */
-        body::before {
+        nav a::after {
             content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+            z-index: 1001;
+            background: none;
+            border: none;
+            padding: 0.5rem;
+        }
+
+        .hamburger span {
+            width: 28px;
+            height: 3px;
+            background: var(--secondary);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        /* Mobile Menu Overlay */
+        .menu-overlay {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: radial-gradient(circle at 20% 50%, rgba(74, 125, 255, 0.08) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 80%, rgba(255, 77, 143, 0.08) 0%, transparent 50%);
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
             pointer-events: none;
-            z-index: -1;
+            transition: opacity 0.3s ease, pointer-events 0.3s ease;
         }
 
-        /* ==================== MAIN LAYOUT ==================== */
-        .container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 3rem 2rem;
+        .menu-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
         }
 
-        @media (max-width: 768px) {
-            .container {
-                padding: 2rem 1.5rem;
-            }
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            max-width: 300px;
+            height: 100vh;
+            background: linear-gradient(180deg, #1a1a1a 0%, #2a2a2a 100%);
+            z-index: 1001;
+            padding-top: 80px;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            overflow-y: auto;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
         }
 
-        /* ==================== HEADER ==================== */
-        header {
-            text-align: center;
-            margin-bottom: 4rem;
-            animation: fadeInDown 0.8s ease;
+        .mobile-menu.active {
+            transform: translateX(0);
         }
 
-        header h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            letter-spacing: var(--letter-spacing-tight);
-            margin-bottom: 0.5rem;
-            background: var(--gradient-cosmic);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 40px rgba(74, 125, 255, 0.3);
-            animation: glowText 3s ease-in-out infinite;
-        }
-
-        header p {
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-            letter-spacing: var(--letter-spacing-normal);
-            max-width: 700px;
-            margin: 0 auto 2rem;
-            line-height: 1.8;
-        }
-
-        header nav ul {
-            display: flex;
-            justify-content: center;
-            gap: 2.5rem;
+        .mobile-menu ul {
             list-style: none;
-            flex-wrap: wrap;
+            display: flex;
+            flex-direction: column;
+            padding: 0;
         }
 
-        header nav a {
-            color: var(--accent-silver);
+        .mobile-menu li {
+            border-bottom: 1px solid rgba(233, 30, 99, 0.2);
+        }
+
+        .mobile-menu a {
+            display: block;
+            padding: 1.2rem 1.5rem;
+            color: var(--secondary);
             text-decoration: none;
-            font-weight: 600;
-            letter-spacing: var(--letter-spacing-normal);
-            padding: 0.5rem 1.5rem;
-            border: 1px solid rgba(232, 232, 255, 0.2);
-            border-radius: 8px;
+            font-weight: 500;
             transition: all 0.3s ease;
             position: relative;
         }
 
-        header nav a::before {
+        .mobile-menu a::before {
             content: '';
             position: absolute;
-            inset: 0;
-            background: var(--gradient-cosmic);
-            border-radius: 8px;
-            opacity: 0;
-            z-index: -1;
-            transition: opacity 0.3s ease;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: var(--accent);
+            transform: scaleY(0);
+            transform-origin: top;
+            transition: transform 0.3s ease;
         }
 
-        header nav a:hover {
-            color: var(--bg-deep);
-            border-color: var(--primary-pink);
-            box-shadow: var(--glow-pink);
+        .mobile-menu a:hover {
+            background: rgba(233, 30, 99, 0.1);
+            padding-left: 2rem;
         }
 
-        header nav a:hover::before {
-            opacity: 0.8;
+        .mobile-menu a:hover::before {
+            transform: scaleY(1);
         }
 
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 2.5rem;
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
             }
-            header nav ul {
-                gap: 1rem;
-                flex-direction: column;
+            to {
+                opacity: 1;
             }
         }
 
-        /* ==================== SECTION STYLING ==================== */
-        section {
-            margin-bottom: 5rem;
-            animation: fadeInUp 0.8s ease;
-        }
-
-        section h2 {
-            font-size: 2.2rem;
-            font-weight: 700;
-            letter-spacing: var(--letter-spacing-tight);
-            margin-bottom: 1.5rem;
-            color: var(--accent-silver);
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
             display: flex;
             align-items: center;
-            gap: 1rem;
+            justify-content: center;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            position: relative;
+            overflow: hidden;
+            margin-top: 70px;
         }
 
-        section > p {
-            color: var(--text-secondary);
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(233, 30, 99, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(233, 30, 99, 0.08) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 10;
+            position: relative;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo-container {
+            margin-bottom: 2rem;
+            animation: scaleIn 1s ease-out 0.2s both;
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: rgba(233, 30, 99, 0.15);
+            border: 2px solid var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            margin: 0 auto;
+            box-shadow: 0 0 40px rgba(233, 30, 99, 0.3);
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4.5rem;
+            font-weight: 900;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            letter-spacing: -2px;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .tagline {
+            font-size: 1.3rem;
+            color: var(--accent-light);
+            margin-bottom: 2rem;
+            font-weight: 300;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
             font-size: 1rem;
-            margin-bottom: 2rem;
-            line-height: 1.8;
-            letter-spacing: var(--letter-spacing-normal);
-        }
-
-        /* ==================== GLASSMORPHISM CARDS ==================== */
-        .glass-card {
-            background: rgba(26, 31, 58, 0.6);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(232, 232, 255, 0.1);
-            border-radius: 16px;
-            padding: 2.5rem;
-            box-shadow: var(--shadow-md);
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .glass-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: var(--gradient-glass);
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .glass-card:hover {
-            border-color: rgba(74, 125, 255, 0.4);
-            box-shadow: var(--shadow-lg), var(--glow-blue);
-            transform: translateY(-4px);
-        }
-
-        .glass-card > * {
-            position: relative;
-            z-index: 2;
-        }
-
-        /* ==================== FORM STYLING ==================== */
-        #commission-form {
-            background: rgba(26, 31, 58, 0.6);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(232, 232, 255, 0.1);
-            border-radius: 16px;
-            padding: 3rem;
-            box-shadow: var(--shadow-md);
-            position: relative;
-            overflow: hidden;
-        }
-
-        #commission-form::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: var(--gradient-glass);
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        #commission-form > * {
-            position: relative;
-            z-index: 2;
-        }
-
-        fieldset {
-            border: 1px solid rgba(74, 125, 255, 0.2);
-            border-radius: 12px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            background: rgba(74, 125, 255, 0.05);
+            cursor: pointer;
             transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-family: 'Inter', sans-serif;
         }
 
-        fieldset:hover {
-            border-color: rgba(255, 77, 143, 0.3);
-            background: rgba(255, 77, 143, 0.05);
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+            color: white;
+            box-shadow: 0 10px 30px rgba(233, 30, 99, 0.3);
         }
 
-        legend {
-            font-weight: 700;
-            font-size: 1.1rem;
-            padding: 0 1rem;
-            color: var(--accent-silver);
-            letter-spacing: var(--letter-spacing-normal);
-            text-transform: uppercase;
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(233, 30, 99, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--secondary);
+            border: 2px solid var(--accent);
+        }
+
+        .btn-secondary:hover {
+            background: var(--accent);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* About Section */
+        .about {
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .about-content p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+
+        .about-image {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, #e91e63 0%, #ff69b4 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 100px;
+            color: white;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Portfolio Section */
+        .portfolio {
+            padding: 6rem 2rem;
+            background: linear-gradient(180deg, #f5f5f5 0%, #ffffff 100%);
+        }
+
+        .section-title {
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            color: var(--text-primary);
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            aspect-ratio: 1;
+            background: var(--neutral-dark);
+            cursor: pointer;
+            group: true;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.02);
+        }
+
+        .gallery-item-image {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #e91e63 0%, #ff69b4 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            color: white;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-item-image {
+            transform: scale(1.1);
+        }
+
+        .gallery-item-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem;
+            background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.8) 100%);
+            color: white;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-item-overlay {
+            transform: translateY(0);
+        }
+
+        .gallery-item-title {
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        /* Commission Section */
+        .commission {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .form-container {
+            background: var(--neutral-light);
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-row.full {
+            grid-template-columns: 1fr;
         }
 
         .form-group {
-            margin-bottom: 1.5rem;
+            display: flex;
+            flex-direction: column;
         }
 
         label {
-            display: block;
             font-weight: 600;
-            margin-bottom: 0.6rem;
+            margin-bottom: 0.5rem;
             color: var(--text-primary);
-            letter-spacing: var(--letter-spacing-normal);
-            text-transform: uppercase;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
         }
 
         input[type="text"],
         input[type="email"],
-        input[type="url"],
-        select,
-        textarea {
-            width: 100%;
-            padding: 0.9rem 1.2rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(232, 232, 255, 0.15);
-            border-radius: 10px;
-            color: var(--text-primary);
+        input[type="tel"],
+        textarea,
+        select {
+            padding: 0.75rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
             font-size: 1rem;
-            font-family: inherit;
-            letter-spacing: var(--letter-spacing-normal);
             transition: all 0.3s ease;
+            background: white;
         }
 
         input[type="text"]:focus,
         input[type="email"]:focus,
-        input[type="url"]:focus,
-        select:focus,
-        textarea:focus {
+        input[type="tel"]:focus,
+        textarea:focus,
+        select:focus {
             outline: none;
-            background: rgba(255, 255, 255, 0.08);
-            border-color: var(--primary-blue);
-            box-shadow: 0 0 15px rgba(74, 125, 255, 0.3);
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(233, 30, 99, 0.1);
         }
 
         textarea {
@@ -321,947 +520,961 @@
             min-height: 120px;
         }
 
-        small {
-            display: block;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            margin-top: 0.4rem;
-            letter-spacing: 0.02em;
-        }
-
-        .radio-group {
+        .checkbox-group {
             display: flex;
-            flex-wrap: wrap;
-            gap: 1.5rem 2rem;
-            margin-bottom: 1rem;
-        }
-
-        .radio-group label {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.7rem;
-            font-weight: 500;
-            text-transform: none;
-            font-size: 0.95rem;
-            margin-bottom: 0;
-        }
-
-        input[type="radio"] {
-            appearance: none;
-            -webkit-appearance: none;
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--primary-blue);
-            border-radius: 50%;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            background: transparent;
-            position: relative;
-        }
-
-        input[type="radio"]:hover {
-            box-shadow: var(--glow-blue);
-        }
-
-        input[type="radio"]:checked {
-            background: var(--primary-blue);
-            box-shadow: var(--glow-blue);
-        }
-
-        input[type="radio"]:checked::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 6px;
-            height: 6px;
-            background: var(--bg-deep);
-            border-radius: 50%;
-        }
-
-        /* ==================== PAYMENT ZELLE HIGHLIGHT ==================== */
-        .payment-zelle-highlight {
-            background: linear-gradient(135deg, rgba(74, 125, 255, 0.15) 0%, rgba(255, 77, 143, 0.1) 100%);
-            border: 2px solid var(--primary-blue);
-            border-radius: 12px;
-            padding: 1.2rem 1.5rem;
-            display: flex;
-            align-items: center;
+            flex-direction: column;
             gap: 1rem;
             margin-bottom: 1.5rem;
-            box-shadow: var(--glow-blue);
-            transition: all 0.3s ease;
         }
 
-        .payment-zelle-highlight:hover {
-            border-color: var(--primary-pink);
-            box-shadow: var(--glow-pink);
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
         }
 
-        .payment-zelle-highlight label {
-            margin-bottom: 0;
-            text-transform: none;
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--accent-silver);
-        }
-
-        .payment-zelle-highlight span {
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-        }
-
-        /* ==================== SUBMIT BUTTON ==================== */
-        #submit-btn {
-            width: 100%;
-            padding: 1.1rem 2rem;
-            background: var(--gradient-cosmic);
-            color: var(--bg-deep);
-            border: none;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            letter-spacing: var(--letter-spacing-normal);
-            text-transform: uppercase;
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
             cursor: pointer;
-            transition: all 0.4s ease;
-            box-shadow: var(--shadow-lg), var(--glow-pink);
+            accent-color: var(--accent);
+        }
+
+        .checkbox-label {
+            cursor: pointer;
+            margin: 0;
+        }
+
+        .file-upload {
             position: relative;
             overflow: hidden;
+        }
+
+        .file-upload input[type="file"] {
+            position: absolute;
+            left: -9999px;
+        }
+
+        .file-upload-label {
+            display: block;
+            padding: 2rem;
+            border: 2px dashed var(--accent);
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(233, 30, 99, 0.05);
+        }
+
+        .file-upload-label:hover {
+            background: rgba(233, 30, 99, 0.1);
+            border-color: var(--accent-dark);
+        }
+
+        .file-upload-text {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .file-name {
+            color: var(--accent);
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+
+        .price-estimate {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
             margin-top: 1.5rem;
         }
 
-        #submit-btn::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transform: translateX(-100%);
-            transition: transform 0.6s ease;
+        .price-label {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
         }
 
-        #submit-btn:hover::before {
-            transform: translateX(100%);
-        }
-
-        #submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg), 0 0 30px rgba(255, 77, 143, 0.6);
-        }
-
-        #submit-btn:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        /* ==================== DASHBOARD TABLE (QUEUE) ==================== */
-        .queue-dashboard {
-            background: rgba(26, 31, 58, 0.6);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(232, 232, 255, 0.1);
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: var(--shadow-md);
-            overflow-x: auto;
-        }
-
-        #queue-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        #queue-table thead {
-            background: linear-gradient(90deg, rgba(74, 125, 255, 0.15) 0%, rgba(255, 77, 143, 0.1) 100%);
-            border-bottom: 2px solid rgba(74, 125, 255, 0.3);
-        }
-
-        #queue-table th {
-            padding: 1.2rem 1.5rem;
-            text-align: left;
+        .price-value {
+            font-size: 2rem;
             font-weight: 700;
-            color: var(--accent-silver);
-            letter-spacing: var(--letter-spacing-normal);
-            text-transform: uppercase;
-            font-size: 0.9rem;
+            color: var(--accent);
         }
 
-        #queue-table tbody tr {
-            border-bottom: 1px solid rgba(232, 232, 255, 0.08);
+        /* Queue Section */
+        .queue {
+            padding: 6rem 2rem;
+            background: linear-gradient(180deg, #1a1a1a 0%, #2a2a2a 100%);
+            color: white;
+        }
+
+        .queue .section-title {
+            color: white;
+        }
+
+        .queue-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .queue-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(233, 30, 99, 0.3);
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
             transition: all 0.3s ease;
         }
 
-        #queue-table tbody tr:hover {
-            background: rgba(74, 125, 255, 0.08);
-            box-shadow: inset 0 0 20px rgba(74, 125, 255, 0.1);
+        .queue-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--accent);
+            transform: translateX(10px);
         }
 
-        #queue-table td {
-            padding: 1.2rem 1.5rem;
-            color: var(--text-primary);
-            font-weight: 500;
+        .queue-slot {
+            display: grid;
+            grid-template-columns: 150px 1fr 150px;
+            gap: 2rem;
+            align-items: center;
         }
 
-        /* ==================== STATUS BADGE (ADVANCED) ==================== */
-        .status-badge {
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
+        .queue-number {
+            font-family: 'Space Mono', monospace;
+            font-size: 2rem;
             font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
+            color: var(--accent);
         }
 
-        .status-materials {
-            background: linear-gradient(135deg, rgba(74, 125, 255, 0.4) 0%, rgba(74, 125, 255, 0.1) 100%);
-            color: var(--accent-cyan);
-            border-color: var(--primary-blue);
-            box-shadow: 0 0 15px rgba(74, 125, 255, 0.3);
+        .queue-status {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
         }
 
-        .status-sculpting {
-            background: linear-gradient(135deg, rgba(255, 77, 143, 0.4) 0%, rgba(255, 77, 143, 0.1) 100%);
-            color: var(--primary-pink);
-            border-color: var(--primary-pink);
-            box-shadow: 0 0 15px rgba(255, 77, 143, 0.3);
+        .queue-name {
+            font-size: 1.2rem;
+            font-weight: 600;
         }
 
-        .status-furring {
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.4) 0%, rgba(0, 212, 255, 0.1) 100%);
-            color: var(--accent-cyan);
-            border-color: var(--accent-cyan);
-            box-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
+        .queue-current {
+            color: #b0bec5;
+            font-size: 0.95rem;
         }
 
-        .status-shipped {
-            background: linear-gradient(135deg, rgba(76, 175, 80, 0.4) 0%, rgba(76, 175, 80, 0.1) 100%);
-            color: #4caf50;
-            border-color: #4caf50;
-            box-shadow: 0 0 15px rgba(76, 175, 80, 0.3);
-        }
-
-        /* ==================== PROGRESS BAR (ANIMATED) ==================== */
-        .progress-bar-wrap {
-            background: rgba(74, 125, 255, 0.1);
-            border-radius: 20px;
-            height: 8px;
+        .queue-progress {
             width: 100%;
-            min-width: 120px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            margin-top: 0.5rem;
             overflow: hidden;
-            border: 1px solid rgba(74, 125, 255, 0.2);
-            position: relative;
         }
 
-        .progress-bar-fill {
+        .queue-progress-bar {
             height: 100%;
-            border-radius: 20px;
-            background: linear-gradient(90deg, var(--primary-blue), var(--primary-pink), var(--accent-cyan));
-            width: 0%;
-            transition: width 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
-            box-shadow: 0 0 10px var(--glow-blue);
-            position: relative;
+            background: linear-gradient(90deg, var(--accent) 0%, var(--accent-light) 100%);
+            border-radius: 2px;
+            transition: width 0.5s ease;
         }
 
-        .progress-bar-fill::after {
-            content: '';
-            position: absolute;
+        .queue-completion {
+            text-align: right;
+            color: var(--success);
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .queue-open {
+            color: var(--success);
+            font-weight: 700;
+        }
+
+        .queue-closed {
+            color: #ef5350;
+            font-weight: 700;
+        }
+
+        /* Payment Section */
+        .payment {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .payment-card {
+            background: linear-gradient(135deg, var(--neutral-light) 0%, white 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .payment-card.primary {
+            border-color: var(--accent);
+            box-shadow: 0 15px 40px rgba(233, 30, 99, 0.15);
+            transform: scale(1.05);
+        }
+
+        .payment-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .payment-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .payment-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .payment-card p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .payment-badge {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .contact h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .social-link {
+            color: var(--secondary);
+            font-size: 2rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .social-link:hover {
+            color: var(--accent);
+            transform: scale(1.2);
+        }
+
+        /* Footer */
+        footer {
+            background: #0a0a0a;
+            padding: 2rem;
+            text-align: center;
+            color: #888;
+            border-top: 1px solid rgba(233, 30, 99, 0.2);
+        }
+
+        /* Loading State */
+        .loading {
+            display: none;
+            position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            animation: shimmer 2s infinite;
-            border-radius: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
         }
 
-        @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
+        .loading.active {
+            display: flex;
         }
 
-        /* ==================== GALLERY (CINEMATIC) ==================== */
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 2rem;
+        .spinner {
+            border: 4px solid rgba(233, 30, 99, 0.2);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 0.8s linear infinite;
         }
 
-        .gallery-grid figure {
-            position: relative;
-            border-radius: 14px;
-            overflow: hidden;
-            background: rgba(26, 31, 58, 0.8);
-            border: 1px solid rgba(232, 232, 255, 0.1);
-            cursor: pointer;
-            transition: all 0.4s ease;
-            group: figure;
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
-        .gallery-grid figure:hover {
-            border-color: var(--primary-pink);
-            box-shadow: var(--shadow-lg), var(--glow-pink);
-            transform: translateY(-8px) scale(1.02);
-        }
-
-        .gallery-grid img {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-            display: block;
-            transition: transform 0.5s ease, filter 0.5s ease;
-            filter: brightness(0.95) contrast(1.05);
-        }
-
-        .gallery-grid figure:hover img {
-            transform: scale(1.04);
-            filter: brightness(1.1) contrast(1.1);
-        }
-
-        /* Overlay on hover */
-        .gallery-grid figure::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(74, 125, 255, 0.3) 0%, rgba(255, 77, 143, 0.3) 100%);
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            z-index: 2;
-        }
-
-        .gallery-grid figure:hover::after {
-            opacity: 1;
-        }
-
-        .gallery-grid figcaption {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 1.5rem;
-            background: linear-gradient(180deg, transparent 0%, rgba(10, 14, 39, 0.95) 100%);
-            color: var(--text-primary);
-            font-size: 0.95rem;
-            font-weight: 600;
-            text-align: center;
-            letter-spacing: var(--letter-spacing-normal);
-            transform: translateY(30px);
-            opacity: 0;
-            transition: all 0.4s ease;
-            z-index: 3;
-        }
-
-        .gallery-grid figure:hover figcaption {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        @media (max-width: 768px) {
-            .gallery-grid {
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-                gap: 1.5rem;
-            }
-            .gallery-grid img {
-                height: 240px;
-            }
-        }
-
-        /* ==================== FOOTER ==================== */
-        footer {
-            border-top: 1px solid rgba(232, 232, 255, 0.1);
-            padding-top: 2rem;
-            text-align: center;
-            color: var(--text-secondary);
-            margin-top: 5rem;
-        }
-
-        footer p {
-            margin: 0.5rem 0;
-            letter-spacing: var(--letter-spacing-normal);
-        }
-
-        footer small {
-            color: var(--text-muted);
-        }
-
-        /* ==================== TOAST NOTIFICATION ==================== */
-        #toast {
+        /* Success Message */
+        .success-message {
             position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            padding: 1rem 1.5rem;
-            border-radius: 12px;
-            color: var(--text-primary);
-            font-weight: 600;
-            z-index: 9999;
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.4s ease;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(232, 232, 255, 0.2);
-            max-width: 300px;
-            letter-spacing: var(--letter-spacing-normal);
-            box-shadow: var(--shadow-lg);
+            top: 20px;
+            right: 20px;
+            background: var(--success);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: slideIn 0.3s ease;
+            z-index: 2001;
+            max-width: 400px;
         }
 
-        #toast.success {
-            background: linear-gradient(135deg, rgba(76, 175, 80, 0.4) 0%, rgba(76, 175, 80, 0.1) 100%);
-            border-color: #4caf50;
-            opacity: 1;
-            animation: slideInUp 0.4s ease;
-        }
-
-        #toast.error {
-            background: linear-gradient(135deg, rgba(244, 67, 54, 0.4) 0%, rgba(244, 67, 54, 0.1) 100%);
-            border-color: #f44336;
-            opacity: 1;
-            animation: slideInUp 0.4s ease;
-        }
-
-        #toast.loading {
-            background: linear-gradient(135deg, rgba(74, 125, 255, 0.4) 0%, rgba(74, 125, 255, 0.1) 100%);
-            border-color: var(--primary-blue);
-            opacity: 1;
-            animation: slideInUp 0.4s ease;
-        }
-
-        @keyframes slideInUp {
+        @keyframes slideIn {
             from {
-                transform: translateY(30px);
+                transform: translateX(500px);
                 opacity: 0;
             }
             to {
-                transform: translateY(0);
+                transform: translateX(0);
                 opacity: 1;
             }
         }
 
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes glowText {
-            0%, 100% { text-shadow: 0 0 20px rgba(74, 125, 255, 0.3), 0 0 40px rgba(74, 125, 255, 0.1); }
-            50% { text-shadow: 0 0 30px rgba(255, 77, 143, 0.4), 0 0 50px rgba(74, 125, 255, 0.2); }
-        }
-
-        /* ==================== RESPONSIVE DESIGN ==================== */
-        @media (max-width: 1024px) {
-            .container {
-                padding: 2.5rem 1.5rem;
-            }
-            header h1 {
-                font-size: 2.8rem;
-            }
-            section h2 {
-                font-size: 1.8rem;
-            }
-        }
-
+        /* Responsive */
         @media (max-width: 768px) {
-            .container {
-                padding: 1.5rem 1rem;
+            nav {
+                padding: 1rem 1.5rem;
             }
-            header {
-                margin-bottom: 2.5rem;
+
+            nav a::after {
+                display: none;
             }
-            header h1 {
-                font-size: 2rem;
+
+            h1 {
+                font-size: 2.5rem;
             }
-            header nav ul {
-                gap: 0.8rem;
-                flex-direction: column;
+
+            .tagline {
+                font-size: 1.1rem;
             }
-            header nav a {
-                display: block;
-            }
-            section {
-                margin-bottom: 3rem;
-            }
-            section h2 {
-                font-size: 1.5rem;
-            }
-            #commission-form {
-                padding: 1.5rem;
-            }
-            fieldset {
-                padding: 1.5rem;
-            }
-            .radio-group {
-                flex-direction: column;
+
+            .cta-buttons {
                 gap: 1rem;
             }
-            #queue-table th,
-            #queue-table td {
-                padding: 0.8rem;
-                font-size: 0.85rem;
-            }
-        }
 
-        @media (max-width: 480px) {
-            header h1 {
-                font-size: 1.5rem;
+            .btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.9rem;
             }
-            header p {
-                font-size: 0.95rem;
+
+            .about {
+                grid-template-columns: 1fr;
             }
-            section h2 {
-                font-size: 1.3rem;
-                gap: 0.5rem;
+
+            .about-content h2 {
+                font-size: 2rem;
             }
-            #submit-btn {
-                font-size: 0.95rem;
-                padding: 0.9rem 1.5rem;
+
+            .form-row {
+                grid-template-columns: 1fr;
             }
-            #toast {
-                bottom: 1rem;
-                right: 1rem;
-                left: 1rem;
-                max-width: none;
+
+            .queue-slot {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .payment-methods {
+                grid-template-columns: 1fr;
+            }
+
+            .payment-card.primary {
+                transform: scale(1);
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .gallery {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             }
         }
     </style>
 </head>
-<body class="container">
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div style="flex: 1;"></div>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#commission">Commissions</a></li>
+            <li><a href="#queue">Queue</a></li>
+            <li><a href="#payment">Payment</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
 
-    <!-- ==================== HEADER ==================== -->
-    <header>
-        <h1>🌙 LUNAR TAIL CO.</h1>
-        <p><strong>Luxury Fursuit & Custom Cosplay Commissions</strong> — Handcrafted in the USA. Each piece is a bespoke work of art, tailored precisely to your character's unique anatomy and soul.</p>
-        <nav aria-label="Main navigation">
-            <ul>
-                <li><a href="#commission">Commission</a></li>
-                <li><a href="#queue">Production Queue</a></li>
-                <li><a href="#gallery">Portfolio</a></li>
-            </ul>
-        </nav>
-    </header>
+    <!-- Mobile Menu Overlay -->
+    <div class="menu-overlay" id="menuOverlay"></div>
 
-    <!-- ==================== MAIN CONTENT ==================== -->
-    <main>
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#commission">Commissions</a></li>
+            <li><a href="#queue">Queue</a></li>
+            <li><a href="#payment">Payment</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </div>
 
-        <!-- ===== SECTION 1: COMMISSION REQUEST FORM ===== -->
-        <section id="commission" aria-labelledby="commission-heading">
-            <h2 id="commission-heading">📋 Commission Request</h2>
-            <p>Fill out the form below to begin your custom order. All fields marked with <strong>*</strong> are required. Once submitted, our team will review your request and reach out within 2–3 business days.</p>
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="logo-container">
+                <div class="logo">🌙</div>
+            </div>
+            <h1>Lunar Tail Co</h1>
+            <p class="tagline">Elite Fursuit & Custom Cosplay Creator</p>
+            <div class="cta-buttons">
+                <a href="#commission" class="btn btn-primary">Request Commission</a>
+                <a href="#portfolio" class="btn btn-secondary">View Portfolio</a>
+            </div>
+        </div>
+    </section>
 
-            <form id="commission-form" novalidate>
-                <!-- Client Info -->
-                <fieldset>
-                    <legend>Client Information</legend>
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="about-content">
+            <h2>Crafting Dreams into Reality</h2>
+            <p>Welcome to Lunar Tail Co, where artistry meets precision. With years of experience in creating bespoke fursuits and custom cosplay costumes, I specialize in bringing your imagination to life with exceptional craftsmanship and attention to detail.</p>
+            <p>Every piece I create is unique. From concept to completion, I work closely with each client to ensure their character comes alive exactly as envisioned. Using premium materials and innovative techniques, your fursuit or cosplay costume will be a masterpiece.</p>
+            <p>Join our exclusive roster of satisfied clients and experience the Lunar Tail difference.</p>
+        </div>
+        <div class="about-image">🎨</div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section class="portfolio" id="portfolio">
+        <h2 class="section-title">Featured Works</h2>
+        <div class="gallery">
+            <div class="gallery-item">
+                <div class="gallery-item-image">🐺</div>
+                <div class="gallery-item-overlay">
+                    <div class="gallery-item-title">Arctic Wolf Suit</div>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-item-image">🦊</div>
+                <div class="gallery-item-overlay">
+                    <div class="gallery-item-title">Celestial Fox</div>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-item-image">🐉</div>
+                <div class="gallery-item-overlay">
+                    <div class="gallery-item-title">Dragon Legacy</div>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-item-image">🦅</div>
+                <div class="gallery-item-overlay">
+                    <div class="gallery-item-title">Phoenix Rising</div>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-item-image">🐱</div>
+                <div class="gallery-item-overlay">
+                    <div class="gallery-item-title">Urban Cat</div>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-item-image">🦌</div>
+                <div class="gallery-item-overlay">
+                    <div class="gallery-item-title">Ethereal Deer</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Commission Request Section -->
+    <section class="commission" id="commission">
+        <h2 class="section-title">Commission Request Form</h2>
+        <div class="form-container">
+            <form id="commissionForm">
+                <div class="form-row">
                     <div class="form-group">
-                        <label for="client-name">Full Name *</label>
-                        <input type="text" id="client-name" name="clientName" placeholder="e.g. Alex Rivera" required autocomplete="name">
+                        <label for="clientName">Your Name *</label>
+                        <input type="text" id="clientName" name="clientName" required>
                     </div>
                     <div class="form-group">
-                        <label for="client-email">Email Address *</label>
-                        <input type="email" id="client-email" name="clientEmail" placeholder="e.g. alex@example.com" required autocomplete="email">
+                        <label for="clientEmail">Email Address *</label>
+                        <input type="email" id="clientEmail" name="clientEmail" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="clientPhone">Phone Number</label>
+                        <input type="tel" id="clientPhone" name="clientPhone">
                     </div>
                     <div class="form-group">
-                        <label for="client-tag">Discord / Telegram Tag *</label>
-                        <input type="text" id="client-tag" name="clientTag" placeholder="e.g. @alex_fox#1234 or @alexfox" required>
-                        <small>Primary contact method for WIP (work-in-progress) updates.</small>
+                        <label for="characterName">Character Name *</label>
+                        <input type="text" id="characterName" name="characterName" required>
                     </div>
-                </fieldset>
+                </div>
 
-                <!-- Character Details -->
-                <fieldset>
-                    <legend>Character & Concept</legend>
+                <div class="form-row full">
                     <div class="form-group">
-                        <label for="character-concept">Character Concept Description *</label>
-                        <textarea id="character-concept" name="characterConcept" rows="4" placeholder="Describe your character in detail: species, personality, color palette, markings, special features, pose preferences, and any lore that inspires the design..." required></textarea>
+                        <label for="characterConcept">Character Concept Description *</label>
+                        <textarea id="characterConcept" name="characterConcept" placeholder="Describe your character in detail..." required></textarea>
                     </div>
+                </div>
+
+                <div class="form-row full">
                     <div class="form-group">
-                        <label for="ref-sheet-link">Reference Sheet Link (URL)</label>
-                        <input type="url" id="ref-sheet-link" name="refSheetLink" placeholder="https://drive.google.com/... or https://refsheet.net/...">
-                        <small>If you have a ref sheet hosted online, paste the link here. This helps us nail every detail.</small>
+                        <label>Suit Type Selection *</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="fullsuit" name="suitType" value="Full Fursuit (Head, Body, Hands, Feet)" data-price="2500">
+                                <label for="fullsuit" class="checkbox-label">Full Fursuit - Head, Body, Hands, Feet ($2,500 - $4,500)</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="partial" name="suitType" value="Partial Suit (Head, Hands, Feet)" data-price="1500">
+                                <label for="partial" class="checkbox-label">Partial Suit - Head, Hands, Feet ($1,500 - $2,500)</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="head" name="suitType" value="Head Only" data-price="800">
+                                <label for="head" class="checkbox-label">Head/Mask Only ($800 - $1,500)</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="digi" name="suitType" value="Digitigrade Legs" data-price="400">
+                                <label for="digi" class="checkbox-label">Digitigrade Legs Conversion (add-on, +$400 - $800)</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="plantigrade" name="suitType" value="Plantigrade Feet" data-price="300">
+                                <label for="plantigrade" class="checkbox-label">Plantigrade Feet Style (add-on, +$300 - $600)</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="cosplay" name="suitType" value="Custom Cosplay Costume" data-price="1800">
+                                <label for="cosplay" class="checkbox-label">Custom Cosplay Costume ($1,800 - $3,500)</label>
+                            </div>
+                        </div>
                     </div>
-                </fieldset>
+                </div>
 
-                <!-- Commission Type -->
-                <fieldset>
-                    <legend>Commission Type *</legend>
-                    <div class="radio-group">
-                        <label>
-                            <input type="radio" name="commissionType" value="Fullsuit (Digitigrade)" required>
-                            <strong>Fullsuit (Digitigrade)</strong> — Full-body suit with padded digitigrade leg shaping
-                        </label>
-                        <label>
-                            <input type="radio" name="commissionType" value="Fullsuit (Plantigrade)">
-                            <strong>Fullsuit (Plantigrade)</strong> — Full-body suit with natural plantigrade leg stance
-                        </label>
-                        <label>
-                            <input type="radio" name="commissionType" value="Partial Suit">
-                            <strong>Partial Suit</strong> — Head, paws, tail & optional feet (no full body)
-                        </label>
-                        <label>
-                            <input type="radio" name="commissionType" value="Head Only">
-                            <strong>Head Only</strong> — Just the fursuit head, crafted to perfection
-                        </label>
-                    </div>
-                </fieldset>
-
-                <!-- Payment Method — Zelle Highlighted -->
-                <fieldset>
-                    <legend>Down Payment Method</legend>
-                    <p style="margin-bottom:1rem; color: var(--text-secondary); letter-spacing: var(--letter-spacing-normal);">A <strong>30% non-refundable down payment</strong> is required to secure your slot on the production queue. The remaining balance is due before shipping.</p>
-
-                    <!-- Zelle — prominently highlighted -->
-                    <div class="payment-zelle-highlight">
-                        <input type="radio" id="payment-zelle" name="paymentMethod" value="Zelle" checked required>
-                        <label for="payment-zelle">⚡ Zelle — Instant American Bank Transfer</label>
-                        <span>(Preferred — No fees, instant confirmation)</span>
-                    </div>
-
-                    <!-- Alternative payment options -->
-                    <div class="radio-group">
-                        <label>
-                            <input type="radio" name="paymentMethod" value="Bank Wire">
-                            Bank Wire Transfer
-                        </label>
-                        <label>
-                            <input type="radio" name="paymentMethod" value="Cashier Check">
-                            Cashier's Check (by mail)
+                <div class="form-row full">
+                    <div class="form-group file-upload">
+                        <input type="file" id="refSheet" name="refSheet" accept="image/*,.pdf" required>
+                        <label for="refSheet" class="file-upload-label">
+                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">📄</div>
+                            <div class="file-upload-text">Click to upload Reference Sheet (Ref Sheet)</div>
+                            <div class="file-upload-text" style="font-size: 0.85rem; margin-top: 0.5rem;">PNG, JPG, or PDF accepted</div>
+                            <div class="file-name" id="fileName"></div>
                         </label>
                     </div>
-                    <small style="display:block; margin-top:1rem;">Payment instructions will be emailed after your request is reviewed and accepted.</small>
-                </fieldset>
+                </div>
 
-                <!-- Submit -->
-                <button type="submit" id="submit-btn">✦ Submit Commission Request</button>
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label for="additionalNotes">Additional Details & Special Requests</label>
+                        <textarea id="additionalNotes" name="additionalNotes" placeholder="Any special requests, design preferences, or important details..."></textarea>
+                    </div>
+                </div>
+
+                <div class="form-row full">
+                    <div class="price-estimate">
+                        <div class="price-label">Estimated Starting Price</div>
+                        <div class="price-value" id="priceEstimate">$0</div>
+                        <div style="color: #999; font-size: 0.85rem; margin-top: 0.5rem;">Final quote will be provided after review</div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 2rem;">Submit Commission Request</button>
             </form>
-        </section>
+        </div>
+    </section>
 
-        <!-- ===== SECTION 2: LIVE PRODUCTION QUEUE ===== -->
-        <section id="queue" aria-labelledby="queue-heading">
-            <h2 id="queue-heading">📊 Live Production Queue</h2>
-            <p>Real-time status of active commissions. Updates are pushed as each piece moves through our workshop stages: <em>Materials → Sculpting → Furring → Shipped</em>.</p>
-
-            <div class="queue-dashboard">
-                <table id="queue-table" aria-label="Production queue table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Client</th>
-                            <th scope="col">Project Type</th>
-                            <th scope="col">Current Status</th>
-                            <th scope="col">Progress</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Row 1 -->
-                        <tr>
-                            <td>Morgan K.</td>
-                            <td>Fullsuit (Digitigrade)</td>
-                            <td><span class="status-badge status-materials">Materials</span></td>
-                            <td>
-                                <div class="progress-bar-wrap" title="25% — Gathering materials">
-                                    <div class="progress-bar-fill" style="width:25%;"></div>
-                                </div>
-                            </td>
-                        </tr>
-                        <!-- Row 2 -->
-                        <tr>
-                            <td>Riley T.</td>
-                            <td>Partial Suit</td>
-                            <td><span class="status-badge status-sculpting">Sculpting</span></td>
-                            <td>
-                                <div class="progress-bar-wrap" title="50% — Foam sculpting in progress">
-                                    <div class="progress-bar-fill" style="width:50%;"></div>
-                                </div>
-                            </td>
-                        </tr>
-                        <!-- Row 3 -->
-                        <tr>
-                            <td>Jamie L.</td>
-                            <td>Head Only</td>
-                            <td><span class="status-badge status-furring">Furring</span></td>
-                            <td>
-                                <div class="progress-bar-wrap" title="75% — Fur application underway">
-                                    <div class="progress-bar-fill" style="width:75%;"></div>
-                                </div>
-                            </td>
-                        </tr>
-                        <!-- Row 4 -->
-                        <tr>
-                            <td>Casey W.</td>
-                            <td>Fullsuit (Plantigrade)</td>
-                            <td><span class="status-badge status-shipped">Shipped</span></td>
-                            <td>
-                                <div class="progress-bar-wrap" title="100% — Package delivered">
-                                    <div class="progress-bar-fill" style="width:100%;"></div>
-                                </div>
-                            </td>
-                        </tr>
-                        <!-- Row 5 -->
-                        <tr>
-                            <td>Taylor R.</td>
-                            <td>Fullsuit (Digitigrade)</td>
-                            <td><span class="status-badge status-materials">Materials</span></td>
-                            <td>
-                                <div class="progress-bar-wrap" title="20% — Sourcing specialty faux fur">
-                                    <div class="progress-bar-fill" style="width:20%;"></div>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+    <!-- Queue Status Section -->
+    <section class="queue" id="queue">
+        <h2 class="section-title">Live Queue Status</h2>
+        <div class="queue-container">
+            <div class="queue-item">
+                <div class="queue-slot">
+                    <div class="queue-number">1</div>
+                    <div class="queue-status">
+                        <div class="queue-name">Midnight Wolf</div>
+                        <div class="queue-current">Current Stage: Material Gathering & Pattern Drafting</div>
+                        <div class="queue-progress">
+                            <div class="queue-progress-bar" style="width: 15%;"></div>
+                        </div>
+                    </div>
+                    <div class="queue-completion">15% Done</div>
+                </div>
             </div>
-            <p style="margin-top:1.5rem; font-size:0.9rem;">
-                <strong>Queue Legend:</strong>
-                <span class="status-badge status-materials">Materials</span>
-                <span class="status-badge status-sculpting">Sculpting</span>
-                <span class="status-badge status-furring">Furring</span>
-                <span class="status-badge status-shipped">Shipped</span>
-            </p>
-        </section>
 
-        <!-- ===== SECTION 3: PORTFOLIO / IMAGE GALLERY ===== -->
-        <section id="gallery" aria-labelledby="gallery-heading">
-            <h2 id="gallery-heading">🖼️ Portfolio Gallery</h2>
-            <p>A glimpse into our craftsmanship. Each fursuit is 100% handcrafted with premium faux furs, custom resin casts, and meticulous airbrushing.</p>
-
-            <div class="gallery-grid">
-                <figure>
-                    <img src="images/fursuit1.jpg" alt="Fullsuit Digitigrade — Silver fox with LED eyes" loading="lazy">
-                    <figcaption>Silver Fox — Fullsuit (Digitigrade)</figcaption>
-                </figure>
-                <figure>
-                    <img src="images/fursuit2.jpg" alt="Partial Suit — Neon tiger with glow accents" loading="lazy">
-                    <figcaption>Neon Tiger — Partial Suit</figcaption>
-                </figure>
-                <figure>
-                    <img src="images/fursuit3.jpg" alt="Head Only — Dutch angel dragon, pearlescent finish" loading="lazy">
-                    <figcaption>Angel Dragon — Head Only</figcaption>
-                </figure>
-                <figure>
-                    <img src="images/fursuit4.jpg" alt="Fullsuit Plantigrade — Timber wolf, hyper-realistic" loading="lazy">
-                    <figcaption>Timber Wolf — Fullsuit (Plantigrade)</figcaption>
-                </figure>
-                <figure>
-                    <img src="images/fursuit5.jpg" alt="Partial Suit — Cyberpunk coyote with EL wire" loading="lazy">
-                    <figcaption>Cyber Coyote — Partial Suit</figcaption>
-                </figure>
-                <figure>
-                    <img src="images/fursuit6.jpg" alt="Fullsuit Digitigrade — Snow leopard with hand-painted spots" loading="lazy">
-                    <figcaption>Snow Leopard — Fullsuit (Digitigrade)</figcaption>
-                </figure>
+            <div class="queue-item">
+                <div class="queue-slot">
+                    <div class="queue-number">2</div>
+                    <div class="queue-status">
+                        <div class="queue-name">Cosmic Fox Partial</div>
+                        <div class="queue-current">Current Stage: Furring & Sewing</div>
+                        <div class="queue-progress">
+                            <div class="queue-progress-bar" style="width: 45%;"></div>
+                        </div>
+                    </div>
+                    <div class="queue-completion">45% Done</div>
+                </div>
             </div>
-        </section>
 
-    </main>
+            <div class="queue-item">
+                <div class="queue-slot">
+                    <div class="queue-number">3</div>
+                    <div class="queue-status">
+                        <div class="queue-name">Dragon Head Commission</div>
+                        <div class="queue-current">Current Stage: Eyes & Details</div>
+                        <div class="queue-progress">
+                            <div class="queue-progress-bar" style="width: 75%;"></div>
+                        </div>
+                    </div>
+                    <div class="queue-completion">75% Done</div>
+                </div>
+            </div>
 
-    <!-- ==================== FOOTER ==================== -->
+            <div class="queue-item">
+                <div class="queue-slot">
+                    <div class="queue-number">4</div>
+                    <div class="queue-status">
+                        <div class="queue-name">Available Slot</div>
+                        <div class="queue-current">Queue is OPEN for new commissions</div>
+                        <div class="queue-progress">
+                            <div class="queue-progress-bar" style="width: 0%;"></div>
+                        </div>
+                    </div>
+                    <div class="queue-completion queue-open">OPEN</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payment Section -->
+    <section class="payment" id="payment">
+        <h2 class="section-title">Payment Methods & Process</h2>
+        <div class="payment-methods">
+            <div class="payment-card primary">
+                <div class="payment-badge">RECOMMENDED</div>
+                <div class="payment-icon">🏦</div>
+                <h3>Zelle Transfer</h3>
+                <p>Instant, secure bank transfer. The preferred method for all commission deposits. Payments processed within seconds.</p>
+                <p style="font-size: 0.9rem; color: var(--accent); font-weight: 600;">Fastest & Safest Option</p>
+            </div>
+
+            <div class="payment-card">
+                <div class="payment-icon">💳</div>
+                <h3>PayPal</h3>
+                <p>Secure online payment. Available for all transaction sizes. Small processing fee may apply.</p>
+                <p style="font-size: 0.9rem; color: var(--text-secondary);">Standard processing</p>
+            </div>
+
+            <div class="payment-card">
+                <div class="payment-icon">🪙</div>
+                <h3>Stripe</h3>
+                <p>Credit/Debit card payments. Secure encrypted transactions with additional protection.</p>
+                <p style="font-size: 0.9rem; color: var(--text-secondary);">Multiple payment options</p>
+            </div>
+        </div>
+
+        <div style="background: #f5f5f5; padding: 2rem; border-radius: 12px; margin-top: 3rem;">
+            <h3 style="color: var(--text-primary); margin-bottom: 1rem;">Payment Schedule</h3>
+            <ul style="color: var(--text-secondary); line-height: 2; list-style-position: inside;">
+                <li><strong>Down Payment (50%):</strong> Due upon approval to secure your slot in the queue</li>
+                <li><strong>Final Payment (50%):</strong> Due before shipping/delivery</li>
+                <li><strong>Rush Orders:</strong> Available with 25% rush fee + expedited payment terms</li>
+            </ul>
+            <p style="color: var(--text-secondary); margin-top: 1rem; font-size: 0.95rem;"><strong>Note:</strong> All orders are custom-made. Deposits are non-refundable unless the order is cancelled by Lunar Tail Co.</p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <h2>Let's Create Something Magical</h2>
+        <p style="font-size: 1.1rem; margin-bottom: 2rem;">Have questions about commissions? Reach out directly.</p>
+        
+        <div style="margin-bottom: 2rem;">
+            <p style="font-size: 0.95rem; margin-bottom: 0.5rem;">📧 <strong>Email:</strong> commissions@lunartailco.com</p>
+            <p style="font-size: 0.95rem; margin-bottom: 0.5rem;">📞 <strong>Phone:</strong> +1 (555) 123-4567</p>
+            <p style="font-size: 0.95rem;">🕐 <strong>Response Time:</strong> Within 48 hours</p>
+        </div>
+
+        <div class="social-links">
+            <a href="#" class="social-link" title="Instagram">📷</a>
+            <a href="#" class="social-link" title="Twitter/X">𝕏</a>
+            <a href="#" class="social-link" title="TikTok">🎵</a>
+            <a href="#" class="social-link" title="Discord">💬</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer>
-        <p>&copy; <span id="current-year">2026</span> Lunar Tail Co. — Luxury Fursuit & Custom Cosplay Atelier. All rights reserved.</p>
-        <p><small>Based in the United States. Worldwide shipping available.</small></p>
+        <p>&copy; 2024 Lunar Tail Co. All rights reserved. Handcrafted with love and magic. ✨</p>
     </footer>
 
-    <!-- ==================== TOAST NOTIFICATION ==================== -->
-    <div id="toast" aria-live="polite" aria-atomic="true"></div>
+    <!-- Loading Spinner -->
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+    </div>
 
-    <!-- ==================== JAVASCRIPT ==================== -->
+    <!-- Success Message -->
+    <div class="success-message" id="successMessage" style="display: none;">
+        ✓ Commission request submitted successfully! We'll be in touch within 48 hours.
+    </div>
+
     <script>
-        (function () {
-            'use strict';
+        // ============================================================
+        // WEBHOOK CONFIGURATION - MAKE.COM INTEGRATION
+        // ============================================================
+        const MAKE_WEBHOOK_URL = 'https://hook.make.com/YOUR_WEBHOOK_ID_HERE';
+        
+        // Replace with your actual Make.com webhook URL
+        // To get your webhook: 
+        // 1. Create a scenario in Make.com
+        // 2. Add a Webhook trigger
+        // 3. Copy the webhook URL
+        // 4. Paste it here as: const MAKE_WEBHOOK_URL = 'https://hook.make.com/xxxxxxxxxxxx';
 
-            const MAKE_WEBHOOK_URL = 'https://hook.us2.make.com/lawfjw0n1ugn7ur6zh211tn63jgs035m';
+        // ============================================================
+        // HAMBURGER MENU FUNCTIONALITY
+        // ============================================================
 
-            let commissionForm;
-            let submitBtn;
-            let toastEl;
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const menuLinks = mobileMenu.querySelectorAll('a');
 
-            function showToast(message, type, duration) {
-                const dur = typeof duration === 'number' ? duration : 4000;
-                if (!toastEl) return;
+        // Toggle menu when hamburger is clicked
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+        });
 
-                toastEl.className = '';
-                toastEl.textContent = message;
-                void toastEl.offsetWidth;
-                toastEl.classList.add(type);
+        // Close menu when a link is clicked
+        menuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                menuOverlay.classList.remove('active');
+            });
+        });
 
-                clearTimeout(toastEl._timeoutId);
-                toastEl._timeoutId = setTimeout(function () {
-                    toastEl.className = '';
-                    toastEl.textContent = '';
-                }, dur);
+        // Close menu when overlay is clicked
+        menuOverlay.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            menuOverlay.classList.remove('active');
+        });
+
+        // Close menu when pressing Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                hamburger.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                menuOverlay.classList.remove('active');
             }
+        });
 
-            async function sendToWebhook(payload) {
-                try {
-                    const response = await fetch(MAKE_WEBHOOK_URL, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json',
-                        },
-                        body: JSON.stringify(payload),
-                    });
+        // ============================================================
+        // FORM HANDLING & WEBHOOK INTEGRATION
+        // ============================================================
 
-                    if (response.ok) {
-                        console.log('[Webhook] Data successfully dispatched to Make.com. Status:', response.status);
-                        return true;
-                    } else {
-                        console.error('[Webhook] Server responded with error status:', response.status, response.statusText);
-                        return false;
-                    }
-                } catch (networkError) {
-                    console.error('[Webhook] Network or fetch error:', networkError);
-                    return false;
-                }
+        const commissionForm = document.getElementById('commissionForm');
+        const refSheetInput = document.getElementById('refSheet');
+        const fileNameDisplay = document.getElementById('fileName');
+        const priceEstimate = document.getElementById('priceEstimate');
+        const loadingSpinner = document.getElementById('loading');
+        const successMessage = document.getElementById('successMessage');
+
+        // Update filename display
+        refSheetInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                fileNameDisplay.textContent = `📁 ${e.target.files[0].name}`;
             }
+        });
 
-            function buildPayload(form) {
-                const formData = new FormData(form);
+        // Update price estimate based on selections
+        document.querySelectorAll('input[name="suitType"]').forEach(checkbox => {
+            checkbox.addEventListener('change', updatePriceEstimate);
+        });
 
-                const clientName      = (formData.get('clientName') || '').trim();
-                const clientEmail     = (formData.get('clientEmail') || '').trim();
-                const clientTag       = (formData.get('clientTag') || '').trim();
-                const characterConcept = (formData.get('characterConcept') || '').trim();
-                const refSheetLink    = (formData.get('refSheetLink') || '').trim();
-                const commissionType  = formData.get('commissionType') || 'Not specified';
-                const paymentMethod   = formData.get('paymentMethod') || 'Zelle';
+        function updatePriceEstimate() {
+            let totalPrice = 0;
+            document.querySelectorAll('input[name="suitType"]:checked').forEach(checkbox => {
+                const price = parseInt(checkbox.getAttribute('data-price')) || 0;
+                totalPrice += price;
+            });
+            priceEstimate.textContent = totalPrice > 0 ? `$${totalPrice.toLocaleString()}` : '$0';
+        }
 
-                const payload = {
-                    submittedAtUTC: new Date().toISOString(),
-                    source: 'LunarTailCo_Website_CommissionForm',
+        // Form submission
+        commissionForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Show loading state
+            loadingSpinner.classList.add('active');
 
-                    client: {
-                        name: clientName,
-                        email: clientEmail,
-                        contactTag: clientTag,
+            // Collect form data
+            const formData = new FormData(commissionForm);
+            
+            // Convert to plain object for webhook
+            const commissionData = {
+                clientName: document.getElementById('clientName').value,
+                clientEmail: document.getElementById('clientEmail').value,
+                clientPhone: document.getElementById('clientPhone').value,
+                characterName: document.getElementById('characterName').value,
+                characterConcept: document.getElementById('characterConcept').value,
+                suitType: Array.from(document.querySelectorAll('input[name="suitType"]:checked'))
+                    .map(cb => cb.value),
+                additionalNotes: document.getElementById('additionalNotes').value,
+                estimatedPrice: document.getElementById('priceEstimate').textContent,
+                refSheetFileName: refSheetInput.files.length > 0 ? refSheetInput.files[0].name : 'No file uploaded',
+                submissionTime: new Date().toISOString(),
+                source: 'Website Commission Form'
+            };
+
+            try {
+                // Send to Make.com webhook
+                const response = await fetch(MAKE_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
                     },
+                    body: JSON.stringify(commissionData),
+                    mode: 'no-cors' // Important for webhook endpoints
+                });
 
-                    project: {
-                        commissionType: commissionType,
-                        characterConcept: characterConcept,
-                        refSheetLink: refSheetLink || 'No link provided',
-                    },
-
-                    payment: {
-                        method: paymentMethod,
-                        downPaymentRequired: true,
-                        downPaymentPercentage: 30,
-                        note: paymentMethod === 'Zelle'
-                            ? 'Zelle instant transfer — preferred method'
-                            : 'Alternative method — may require additional processing time',
-                    },
-                };
-
-                return payload;
-            }
-
-            function validatePayload(payload) {
-                if (!payload.client.name) {
-                    return { valid: false, message: 'Please enter your full name.' };
-                }
-                if (!payload.client.email) {
-                    return { valid: false, message: 'Please enter your email address.' };
-                }
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailRegex.test(payload.client.email)) {
-                    return { valid: false, message: 'Please enter a valid email address.' };
-                }
-                if (!payload.client.contactTag) {
-                    return { valid: false, message: 'Please enter your Discord or Telegram tag.' };
-                }
-                if (!payload.project.characterConcept) {
-                    return { valid: false, message: 'Please describe your character concept.' };
-                }
-                if (!payload.project.commissionType || payload.project.commissionType === 'Not specified') {
-                    return { valid: false, message: 'Please select a commission type.' };
-                }
-                return { valid: true };
-            }
-
-            async function handleFormSubmit(event) {
-                event.preventDefault();
-
-                if (!commissionForm || !submitBtn) return;
-
-                const payload = buildPayload(commissionForm);
-                const validation = validatePayload(payload);
+                // Show success message
+                loadingSpinner.classList.remove('active');
+                successMessage.style.display = 'block';
                 
-                if (!validation.valid) {
-                    showToast('⚠️ ' + validation.message, 'error', 5000);
-                    const firstInvalid = commissionForm.querySelector('[required]:invalid');
-                    if (firstInvalid) firstInvalid.focus();
-                    return;
-                }
+                // Reset form
+                commissionForm.reset();
+                fileNameDisplay.textContent = '';
+                priceEstimate.textContent = '$0';
 
-                submitBtn.disabled = true;
-                const originalBtnText = submitBtn.textContent;
-                submitBtn.textContent = '⏳ Sending Request...';
-                showToast('Sending your commission request...', 'loading', 0);
+                // Hide success message after 5 seconds
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                }, 5000);
 
-                const success = await sendToWebhook(payload);
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
 
-                if (success) {
-                    showToast('✅ Request submitted successfully! We\'ll review your character and reach out within 2–3 business days via your provided contact tag.', 'success', 8000);
-                    commissionForm.reset();
-                    const zelleRadio = commissionForm.querySelector('#payment-zelle');
-                    if (zelleRadio) zelleRadio.checked = true;
-                } else {
-                    showToast('❌ Something went wrong while sending. Please check your connection and try again. If the issue persists, reach us directly via Discord.', 'error', 8000);
-                }
-
-                submitBtn.disabled = false;
-                submitBtn.textContent = originalBtnText;
+            } catch (error) {
+                console.error('Form submission error:', error);
+                loadingSpinner.classList.remove('active');
+                
+                // Show error message
+                alert('There was an issue submitting your commission request. Please try again or contact us directly.');
             }
+        });
 
-            function init() {
-                commissionForm = document.getElementById('commission-form');
-                submitBtn      = document.getElementById('submit-btn');
-                toastEl        = document.getElementById('toast');
+        // ============================================================
+        // SMOOTH SCROLL ENHANCEMENT
+        // ============================================================
 
-                if (commissionForm) {
-                    commissionForm.addEventListener('submit', handleFormSubmit);
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#' && document.querySelector(href)) {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    const offsetTop = target.offsetTop - 80;
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
                 }
+            });
+        });
 
-                const yearSpan = document.getElementById('current-year');
-                if (yearSpan) {
-                    yearSpan.textContent = new Date().getFullYear();
-                }
+        // ============================================================
+        // QUEUE STATUS AUTO-UPDATE (OPTIONAL - for real-time updates)
+        // ============================================================
 
-                const zelleRadio = document.querySelector('#payment-zelle');
-                if (zelleRadio && !zelleRadio.checked) {
-                    zelleRadio.checked = true;
-                }
+        // You can integrate this with a backend API to fetch real-time queue data
+        // Example: fetch('/api/queue-status') every 30 seconds
 
-                console.log('🌙 Lunar Tail Co. — Premium luxury design initialized.');
-                console.log('   Webhook endpoint:', MAKE_WEBHOOK_URL);
-                console.log('   Glassmorphism • Cosmic Palette • Cinematic Gallery');
-            }
+        function updateQueueStatus() {
+            // This is where you would fetch updated queue data from your backend
+            // and update the DOM accordingly
+            
+            // Example API call:
+            // fetch('/api/queue-status')
+            //     .then(res => res.json())
+            //     .then(data => {
+            //         // Update queue items with fresh data
+            //     });
+        }
 
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', init);
-            } else {
-                init();
-            }
+        // Uncomment to enable auto-refresh every 30 seconds
+        // setInterval(updateQueueStatus, 30000);
 
-        })();
+        // ============================================================
+        // ANALYTICS & TRACKING (Optional)
+        // ============================================================
+
+        // Track form interactions (if using Google Analytics or similar)
+        document.getElementById('commissionForm').addEventListener('change', (e) => {
+            // You can add analytics tracking here
+            console.log('Form field changed:', e.target.name);
+        });
+
+        // ============================================================
+        // PAGE LOAD ANIMATIONS
+        // ============================================================
+
+        window.addEventListener('load', () => {
+            // Add animation classes or trigger animations on load
+            document.body.classList.add('loaded');
+        });
+
+        // ============================================================
+        // RESPONSIVE BEHAVIOR
+        // ============================================================
+
+        // Handle mobile menu or responsive adjustments
+        if (window.innerWidth < 768) {
+            // Mobile-specific behavior
+            document.addEventListener('touchstart', function(){}, true);
+        }
     </script>
-
 </body>
 </html>
